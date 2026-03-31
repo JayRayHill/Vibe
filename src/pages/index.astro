@@ -272,13 +272,13 @@ import Contact   from '../components/Contact.astro';
   const NAV_H        = 64;
   const PX_PER_ITEM  = 320; // scroll distance allocated per item
 
-  // Start all items invisible
-  gsap.set(serviceItems, { opacity: 0, y: 55 });
+  // Start all items invisible, no positional offset — pure fade
+  gsap.set(serviceItems, { opacity: 0 });
 
   const animated = new Set<number>();
 
   const revealItem = (item: HTMLElement) =>
-    gsap.to(item, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+    gsap.to(item, { opacity: 1, duration: 0.7, ease: 'power2.out' });
 
   ScrollTrigger.create({
     trigger:       '#services',
