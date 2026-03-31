@@ -335,22 +335,63 @@ import Contact   from '../components/Contact.astro';
   }
 
   // ─────────────────────────────────────────────────────────────
-  // Work cards — stagger up
+  // WORK — horizontal scroll + 3D tilt
   // ─────────────────────────────────────────────────────────────
-  gsap.utils.toArray<HTMLElement>('.work__card').forEach((card, i) => {
-    gsap.from(card, {
+  const track   = document.getElementById('work-track')   as HTMLElement;
+  const hscroll = document.getElementById('work-hscroll') as HTMLElement;
+
+  if (track && hscroll) {
+    // Pin the strip, scrub the track left as you scroll down
+    gsap.to(track, {
+      x: () => -(track.scrollWidth - hscroll.clientWidth),
+      ease: 'none',
       scrollTrigger: {
-        trigger:       card,
-        start:         'top 92%',
-        toggleActions: 'play none none none',
+        trigger:           hscroll,
+        start:             `top top+=${NAV_H}`,
+        end:               () => `+=${track.scrollWidth - hscroll.clientWidth}`,
+        pin:               true,
+        anticipatePin:     1,
+        scrub:             1,
+        invalidateOnRefresh: true,
       },
-      opacity:  0,
-      y:        32,
-      duration: 0.6,
-      delay:    i * 0.07,
-      ease:     'power2.out',
     });
-  });
+
+    // 3D tilt + shine per card
+    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+      const shine = card.querySelector<HTMLElement>('.work__card-shine');
+
+      card.addEventListener('mousemove', (e: MouseEvent) => {
+        const r  = card.getBoundingClientRect();
+        const nx = (e.clientX - r.left)  / r.width  - 0.5; // -0.5 → 0.5
+        const ny = (e.clientY - r.top)   / r.height - 0.5;
+
+        gsap.to(card, {
+          rotateY:             nx * 14,
+          rotateX:             -ny * 14,
+          transformPerspective: 900,
+          duration:            0.4,
+          ease:                'power1.out',
+        });
+
+        // Shine tracks exact cursor position
+        if (shine) {
+          const mx = ((e.clientX - r.left)  / r.width)  * 100;
+          const my = ((e.clientY - r.top)   / r.height) * 100;
+          card.style.setProperty('--mx', `${mx}%`);
+          card.style.setProperty('--my', `${my}%`);
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY:             0,
+          rotateX:             0,
+          duration:            0.8,
+          ease:                'elastic.out(1, 0.5)',
+        });
+      });
+    });
+  }
 
   // ─────────────────────────────────────────────────────────────
   // Magnetic buttons

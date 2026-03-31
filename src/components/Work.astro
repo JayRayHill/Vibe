@@ -9,53 +9,83 @@ const featured = {
   href:    '#',
 };
 
-const projects = [
+const cards = [
   {
-    number:  '02',
-    title:   'Ops Dashboard',
-    year:    '2023',
-    type:    'UX Design · Internal Tool',
-    desc:    'Redesigned the internal operations dashboard used daily by the Unique Supply team, cutting task time by 35% through clearer hierarchy and smarter interaction flows.',
-    tags:    ['UX', 'Figma', 'Data Viz'],
-    href:    '#',
+    number: '02',
+    title:  'Ops Dashboard',
+    year:   '2023',
+    type:   'UX Design · Internal Tool',
+    desc:   'Redesigned the internal operations dashboard, cutting task completion time by 35% through clearer hierarchy and smarter flows.',
+    tags:   ['UX', 'Figma', 'Data Viz'],
+    href:   '#',
+    style:  'a',
   },
   {
-    number:  '03',
-    title:   'Brand Design System',
-    year:    '2023',
-    type:    'Design Systems · Frontend',
-    desc:    'Built a scalable component library and design token system that unified all digital touchpoints and enabled faster, more consistent shipping across the team.',
-    tags:    ['Design Tokens', 'Components', 'Documentation'],
-    href:    '#',
+    number: '03',
+    title:  'Brand Design System',
+    year:   '2023',
+    type:   'Design Systems · Frontend',
+    desc:   'Component library and token system that unified all digital touchpoints and enabled faster, consistent shipping across teams.',
+    tags:   ['Tokens', 'Components', 'Docs'],
+    href:   '#',
+    style:  'b',
   },
   {
-    number:  '04',
-    title:   'Marketing Site Rebuild',
-    year:    '2022',
-    type:    'Web Design · Development',
-    desc:    'Complete redesign and build of a marketing site — performance-first, conversion-focused, and fully responsive with sub-1s load times.',
-    tags:    ['Astro', 'CSS', 'Performance'],
-    href:    '#',
+    number: '04',
+    title:  'Marketing Site Rebuild',
+    year:   '2022',
+    type:   'Web Design · Development',
+    desc:   'Performance-first, conversion-focused rebuild of the main marketing site. Sub-1s load time, fully responsive.',
+    tags:   ['Astro', 'CSS', 'Performance'],
+    href:   '#',
+    style:  'c',
+  },
+  {
+    number: '05',
+    title:  'Field Ops Mobile',
+    year:   '2022',
+    type:   'UX Design · Mobile',
+    desc:   'Mobile-first web app built for field operations teams — designed to work under pressure in low-connectivity environments.',
+    tags:   ['Mobile UX', 'PWA', 'Offline'],
+    href:   '#',
+    style:  'd',
+  },
+  {
+    number: '06',
+    title:  'Customer Portal',
+    year:   '2023',
+    type:   'Product Design · B2B',
+    desc:   'Self-service customer portal reducing support tickets by 28%. Complex workflows made navigable through clear UX architecture.',
+    tags:   ['UX Research', 'Prototyping', 'React'],
+    href:   '#',
+    style:  'e',
+  },
+  {
+    number: '07',
+    title:  'Analytics Dashboard',
+    year:   '2024',
+    type:   'Data Viz · Web App',
+    desc:   'Real-time analytics interface translating dense data into scannable, actionable insights for non-technical stakeholders.',
+    tags:   ['Data Viz', 'UI Design', 'D3'],
+    href:   '#',
+    style:  'f',
   },
 ];
 ---
 
 <section class="work" id="work">
-  <div class="container">
 
+  <!-- ── Section header + featured project ── -->
+  <div class="container">
     <div class="work__header" data-fade-up>
       <span class="section-tag">Selected Works</span>
     </div>
 
-    <!-- ── Featured project ── -->
     <article class="work__featured" data-fade-up>
       <a href={featured.href} class="work__featured-link" target="_blank" rel="noopener noreferrer">
         <div class="work__featured-visual mock mock--featured" aria-hidden="true">
-          <!-- CSS-art UI mockup -->
           <div class="mock__bar">
-            <div class="mock__dots">
-              <span></span><span></span><span></span>
-            </div>
+            <div class="mock__dots"><span></span><span></span><span></span></div>
           </div>
           <div class="mock__content">
             <div class="mock__sidebar">
@@ -96,57 +126,64 @@ const projects = [
         </div>
       </a>
     </article>
+  </div>
 
-    <hr class="section-divider" />
+  <!-- ── Horizontal scroll strip — full bleed ── -->
+  <div class="work__hscroll" id="work-hscroll">
+    <div class="work__track" id="work-track">
+      {cards.map((card) => (
+        <article class={`work__card work__card--${card.style}`} data-tilt>
+          <a href={card.href} class="work__card-link" target="_blank" rel="noopener noreferrer">
 
-    <!-- ── Project grid ── -->
-    <ul class="work__grid">
-      {projects.map((p, i) => (
-        <li class="work__card" data-fade-up style={`--delay: ${i * 0.07}s`}>
-          <a href={p.href} class="work__card-link" target="_blank" rel="noopener noreferrer">
-            <div class={`mock mock--card mock--style-${i + 1}`} aria-hidden="true">
-              <div class="mock__bar">
-                <div class="mock__dots"><span></span><span></span><span></span></div>
+            <!-- CSS-art mockup -->
+            <div class="work__card-visual" aria-hidden="true">
+              <div class="mock-card__bar">
+                <div class="mock-card__dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="mock-card__url"></div>
               </div>
-              <div class="mock__card-body">
-                <div class="mock__card-line mock__card-line--wide"></div>
-                <div class="mock__card-line"></div>
-                <div class="mock__card-line mock__card-line--narrow"></div>
-                <div class="mock__card-block"></div>
-              </div>
+              <div class="mock-card__body"></div>
             </div>
+
+            <!-- Info -->
             <div class="work__card-info">
               <div class="work__card-top">
-                <span class="work__num">{p.number}</span>
-                <span class="work__year">{p.year}</span>
+                <span class="work__num">{card.number}</span>
+                <span class="work__year">{card.year}</span>
               </div>
-              <h3 class="work__card-title">{p.title}</h3>
-              <p class="work__card-type">{p.type}</p>
-              <p class="work__card-desc">{p.desc}</p>
+              <h3 class="work__card-title">{card.title}</h3>
+              <p class="work__card-type">{card.type}</p>
+              <p class="work__card-desc">{card.desc}</p>
               <ul class="work__tags work__tags--sm">
-                {p.tags.map(t => <li>{t}</li>)}
+                {card.tags.map(t => <li>{t}</li>)}
               </ul>
             </div>
-          </a>
-        </li>
-      ))}
-    </ul>
 
+            <!-- Hover shine overlay -->
+            <div class="work__card-shine" aria-hidden="true"></div>
+
+          </a>
+        </article>
+      ))}
+    </div>
   </div>
+
 </section>
 
 <style>
   .work {
-    padding: var(--section-pad) 0;
+    padding-top: var(--section-pad);
+    padding-bottom: 0;
   }
 
   .work__header {
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  /* ── Featured ── */
+  /* ── Featured project ── */
   .work__featured {
-    margin-bottom: clamp(3rem, 6vw, 5rem);
+    margin-bottom: clamp(4rem, 8vw, 7rem);
   }
 
   .work__featured-link {
@@ -157,13 +194,13 @@ const projects = [
     transition:            opacity 0.2s;
   }
 
-  .work__featured-link:hover { opacity: 0.92; }
+  .work__featured-link:hover                { opacity: 0.92; }
   .work__featured-link:hover .work__cta-hint { color: var(--accent); }
 
   .work__featured-meta {
-    display:     flex;
-    align-items: center;
-    gap:         1.25rem;
+    display:       flex;
+    align-items:   center;
+    gap:           1.25rem;
     margin-bottom: 1rem;
   }
 
@@ -191,7 +228,7 @@ const projects = [
     transition:     color 0.2s;
   }
 
-  /* shared meta bits */
+  /* shared meta */
   .work__num {
     font-family:    var(--font-display);
     font-size:      0.7rem;
@@ -201,18 +238,21 @@ const projects = [
   }
 
   .work__type, .work__year {
-    font-size:  0.72rem;
-    color:      var(--text-muted);
+    font-size:      0.72rem;
+    color:          var(--text-muted);
     letter-spacing: 0.04em;
   }
 
-  .work__type { border-left: 1px solid var(--border-light); padding-left: 1.25rem; }
+  .work__type {
+    border-left:  1px solid var(--border-light);
+    padding-left: 1.25rem;
+  }
 
   .work__tags {
-    display:    flex;
-    gap:        0.4rem;
-    flex-wrap:  wrap;
-    list-style: none;
+    display:       flex;
+    gap:           0.4rem;
+    flex-wrap:     wrap;
+    list-style:    none;
     margin-bottom: 1.25rem;
   }
 
@@ -228,82 +268,291 @@ const projects = [
 
   .work__tags--sm li { font-size: 0.6rem; }
 
-  /* ── Grid ── */
-  .work__grid {
-    display:               grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:                   1.5rem;
-    list-style:            none;
-    padding-top:           clamp(2.5rem, 5vw, 4rem);
+  /* ── Horizontal scroll container ── */
+  .work__hscroll {
+    width:    100%;
+    overflow: hidden;
+    /* height defines the "window" cards scroll through */
+    height:   min(560px, calc(100vh - var(--nav-h) - 4rem));
+    border-top: 1px solid var(--border);
+  }
+
+  .work__track {
+    display:     flex;
+    gap:         1.5rem;
+    padding:     2rem var(--gutter) 2rem;
+    height:      100%;
+    width:       max-content;
+    align-items: stretch;
+  }
+
+  /* ── Individual card ── */
+  .work__card {
+    flex-shrink:      0;
+    width:            clamp(280px, 28vw, 360px);
+    height:           100%;
+    /* 3D tilt */
+    transform-style:  preserve-3d;
+    will-change:      transform;
+    position:         relative;
   }
 
   .work__card-link {
-    display:         block;
-    border:          1px solid var(--border);
-    border-radius:   4px;
-    overflow:        hidden;
-    transition:      border-color 0.25s, transform 0.3s ease;
-    height:          100%;
+    display:        flex;
+    flex-direction: column;
+    height:         100%;
+    border:         1px solid var(--border);
+    border-radius:  6px;
+    overflow:       hidden;
+    background:     var(--surface);
+    position:       relative;
+    transition:     border-color 0.3s;
   }
 
   .work__card-link:hover {
     border-color: var(--border-light);
-    transform:    translateY(-4px);
   }
 
+  /* Shine overlay — position driven by JS CSS vars */
+  .work__card-shine {
+    position:       absolute;
+    inset:          0;
+    background:     radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.07),
+      transparent 60%
+    );
+    opacity:        0;
+    transition:     opacity 0.3s;
+    pointer-events: none;
+    border-radius:  6px;
+    z-index:        10;
+  }
+
+  .work__card-link:hover .work__card-shine {
+    opacity: 1;
+  }
+
+  /* ── CSS-art card mockups ── */
+  .work__card-visual {
+    flex-shrink:    0;
+    height:         55%;
+    background:     var(--surface-2);
+    border-bottom:  1px solid var(--border);
+    overflow:       hidden;
+    position:       relative;
+    display:        flex;
+    flex-direction: column;
+  }
+
+  .mock-card__bar {
+    height:        28px;
+    background:    rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+    display:       flex;
+    align-items:   center;
+    gap:           8px;
+    padding:       0 10px;
+    flex-shrink:   0;
+  }
+
+  .mock-card__dots {
+    display: flex;
+    gap:     4px;
+  }
+
+  .mock-card__dots span {
+    width:         6px;
+    height:        6px;
+    border-radius: 50%;
+    background:    var(--border-light);
+  }
+
+  .mock-card__url {
+    flex:          1;
+    height:        6px;
+    background:    var(--border);
+    border-radius: 3px;
+    max-width:     120px;
+  }
+
+  .mock-card__body {
+    flex:     1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Unique content per card using CSS */
+  .work__card--a .mock-card__body {
+    background: linear-gradient(135deg, rgba(57,255,20,0.04) 0%, transparent 60%);
+  }
+  .work__card--a .mock-card__body::before {
+    content:    '';
+    position:   absolute;
+    top:        16px; left: 16px; right: 16px;
+    height:     6px;
+    background: var(--border-light);
+    border-radius: 3px;
+    box-shadow: 0 16px 0 var(--border), 0 28px 0 var(--border);
+  }
+  .work__card--a .mock-card__body::after {
+    content:    '';
+    position:   absolute;
+    bottom:     16px; left: 16px; right: 16px;
+    height:     40px;
+    background: linear-gradient(180deg, rgba(57,255,20,0.08) 0%, transparent 100%);
+    border:     1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .work__card--b .mock-card__body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 14px;
+  }
+  .work__card--b .mock-card__body::before,
+  .work__card--b .mock-card__body::after {
+    content:       '';
+    background:    var(--surface);
+    border:        1px solid var(--border);
+    border-radius: 3px;
+    box-shadow:    inset 0 0 0 1px var(--border);
+  }
+
+  .work__card--c .mock-card__body::before {
+    content:    '';
+    position:   absolute;
+    inset:      0;
+    background:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.4;
+  }
+  .work__card--c .mock-card__body::after {
+    content:    '';
+    position:   absolute;
+    top: 20px; left: 20px;
+    width: 60%; height: 40%;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+  }
+
+  .work__card--d .mock-card__body {
+    background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%);
+  }
+  .work__card--d .mock-card__body::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    border: 2px solid var(--border-light);
+    border-radius: 50%;
+    box-shadow: 0 0 0 12px var(--surface-2), 0 0 0 13px var(--border);
+  }
+  .work__card--d .mock-card__body::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 30%;
+    background: linear-gradient(180deg, transparent 0%, rgba(57,255,20,0.04) 100%);
+    border-top: 1px solid var(--border);
+  }
+
+  .work__card--e .mock-card__body {
+    display: flex;
+  }
+  .work__card--e .mock-card__body::before {
+    content:    '';
+    width:      30%;
+    background: var(--surface-2);
+    border-right: 1px solid var(--border);
+  }
+  .work__card--e .mock-card__body::after {
+    content:  '';
+    flex:     1;
+    background:
+      linear-gradient(var(--surface) 20px, transparent 20px),
+      repeating-linear-gradient(var(--border) 0, var(--border) 1px, transparent 1px, transparent 32px);
+    background-size: 100% 20px, 100% 32px;
+  }
+
+  .work__card--f .mock-card__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+  .work__card--f .mock-card__body::before {
+    content:    '';
+    grid-column: 1 / -1;
+    background: linear-gradient(
+      to right,
+      rgba(57,255,20,0.15) 0%,
+      rgba(57,255,20,0.06) 40%,
+      transparent 70%
+    );
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+  .work__card--f .mock-card__body::after {
+    content:    '';
+    background: var(--surface);
+    border:     1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  /* ── Card info section ── */
   .work__card-info {
-    padding: 1.25rem 1.25rem 1.5rem;
+    flex:    1;
+    padding: 1.1rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap:     0.35rem;
   }
 
   .work__card-top {
     display:         flex;
     justify-content: space-between;
-    margin-bottom:   0.75rem;
+    align-items:     center;
+    margin-bottom:   0.25rem;
   }
 
   .work__card-title {
     font-family:    var(--font-display);
-    font-size:      1.15rem;
+    font-size:      1.1rem;
     font-weight:    700;
     letter-spacing: -0.01em;
-    margin-bottom:  0.25rem;
+    line-height:    1.2;
   }
 
   .work__card-type {
-    font-size:     0.72rem;
-    color:         var(--text-muted);
-    margin-bottom: 0.75rem;
+    font-size:    0.72rem;
+    color:        var(--text-muted);
+    margin-bottom: 0.25rem;
   }
 
   .work__card-desc {
-    font-size:     0.85rem;
-    color:         var(--text-soft);
-    line-height:   1.65;
-    margin-bottom: 1rem;
+    font-size:   0.8125rem;
+    color:       var(--text-soft);
+    line-height: 1.6;
+    flex:        1;
   }
 
-  /* ────────────────────────────────────────
-     CSS-art UI mockups
-  ──────────────────────────────────────── */
-  .mock {
-    background:  var(--surface);
-    border-bottom: 1px solid var(--border);
-    overflow:    hidden;
-    position:    relative;
-  }
-
+  /* ── Featured CSS mock (reused from old layout) ── */
   .mock--featured {
     border-radius: 6px 6px 0 0;
     aspect-ratio:  16 / 10;
     border:        1px solid var(--border);
     border-bottom: none;
+    background:    var(--surface);
+    overflow:      hidden;
   }
 
-  .mock--card {
-    aspect-ratio: 16 / 9;
-  }
-
-  /* titlebar */
   .mock__bar {
     height:        32px;
     background:    var(--surface-2);
@@ -311,14 +560,9 @@ const projects = [
     display:       flex;
     align-items:   center;
     padding:       0 12px;
-    flex-shrink:   0;
   }
 
-  .mock__dots {
-    display: flex;
-    gap:     5px;
-  }
-
+  .mock__dots { display: flex; gap: 5px; }
   .mock__dots span {
     width:         7px;
     height:        7px;
@@ -326,20 +570,16 @@ const projects = [
     background:    var(--border-light);
   }
 
-  /* Featured: sidebar + main */
-  .mock__content {
-    display:    flex;
-    height:     calc(100% - 32px);
-  }
+  .mock__content { display: flex; height: calc(100% - 32px); }
 
   .mock__sidebar {
-    width:         22%;
-    background:    var(--surface-2);
-    border-right:  1px solid var(--border);
-    padding:       16px 10px;
-    display:       flex;
+    width:          22%;
+    background:     var(--surface-2);
+    border-right:   1px solid var(--border);
+    padding:        16px 10px;
+    display:        flex;
     flex-direction: column;
-    gap:           8px;
+    gap:            8px;
   }
 
   .mock__sidebar-item {
@@ -348,7 +588,6 @@ const projects = [
     border-radius: 2px;
     width:         80%;
   }
-
   .mock__sidebar-item.is-active {
     background: var(--accent);
     opacity:    0.7;
@@ -360,19 +599,14 @@ const projects = [
     padding: 16px 14px;
     display: flex;
     flex-direction: column;
-    gap:     12px;
+    gap: 12px;
   }
 
-  .mock__stat-row {
-    display: flex;
-    gap:     10px;
-  }
-
+  .mock__stat-row { display: flex; gap: 10px; }
   .mock__stat {
-    flex:          1;
-    height:        36px;
-    background:    var(--surface-2);
-    border:        1px solid var(--border);
+    flex: 1; height: 36px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: 3px;
   }
 
@@ -383,67 +617,17 @@ const projects = [
     border-radius: 3px;
   }
 
-  .mock__table { display: flex; flex-direction: column; gap: 4px; }
-
-  .mock__table-row {
-    height:     10px;
-    background: var(--border);
-    border-radius: 2px;
-    opacity:    0.6;
-  }
-
-  .mock__table-row--header {
-    background: var(--border-light);
-    opacity:    1;
-  }
-
-  /* Card mockups */
-  .mock__card-body {
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap:     10px;
-  }
-
-  .mock__card-line {
-    height:        8px;
-    background:    var(--border-light);
-    border-radius: 2px;
-    width:         90%;
-  }
-
-  .mock__card-line--wide   { width: 100%; }
-  .mock__card-line--narrow { width: 55%; }
-
-  .mock__card-block {
-    height:        40px;
-    background:    var(--surface-2);
-    border:        1px solid var(--border);
-    border-radius: 3px;
-    margin-top:    4px;
-  }
-
-  /* Unique accent per card style */
-  .mock--style-1 .mock__card-line:first-child { background: rgba(57,255,20,0.18); }
-  .mock--style-2 .mock__bar                   { background: rgba(57,255,20,0.04); }
-  .mock--style-3 .mock__card-block            { border-color: rgba(57,255,20,0.15); }
+  .mock__table        { display: flex; flex-direction: column; gap: 4px; }
+  .mock__table-row    { height: 10px; background: var(--border); border-radius: 2px; opacity: 0.6; }
+  .mock__table-row--header { background: var(--border-light); opacity: 1; }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    .work__featured-link {
-      grid-template-columns: 1fr;
-    }
-
-    .work__grid {
-      grid-template-columns: 1fr 1fr;
-    }
+    .work__featured-link { grid-template-columns: 1fr; }
+    .work__type          { display: none; }
   }
 
   @media (max-width: 600px) {
-    .work__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .work__type { display: none; }
+    .work__hscroll { height: 72vw; }
   }
 </style>
