@@ -4,27 +4,27 @@
 <section class="statement" id="about">
   <div class="container">
 
-    <!-- Words run across the full width -->
+    <!-- Three words run across the full width -->
     <div class="statement__identity">
-      <p class="statement__word" data-scramble>Designer.</p>
-      <p class="statement__word" data-scramble>Developer.</p>
-      <p class="statement__word statement__word--dim" data-scramble>Craftsman.</p>
+      <p class="statement__word" data-scramble>Think.</p>
+      <p class="statement__word" data-scramble>Design.</p>
+      <p class="statement__word statement__word--dim" data-scramble>Build.</p>
     </div>
 
-    <!-- Bio sits below, left-aligned with breathing room -->
+    <!-- Bio below -->
     <div class="statement__bio" data-fade-up>
       <p>
-        Three years building at Unique Supply have reinforced something I've
-        always believed: the best digital products are the ones where
-        engineering discipline and design sensibility are inseparable.
+        Three years at Unique Supply have taught me that the gap between
+        a good product and a great one lives in the details most people
+        scroll past. I design for the ones who notice.
       </p>
       <p>
-        I don't choose between something that works and something that looks
-        beautiful &mdash; I build both. Passionate about the systems behind
-        the screen as much as the experience on top of it.
+        My work sits at the intersection of UX thinking and frontend
+        craft &mdash; where user needs, business goals, and clean code
+        come together into something that just&nbsp;works.
       </p>
       <a href="#contact" class="statement__link">
-        Let&rsquo;s build something &nbsp;&rarr;
+        Start a project &nbsp;&rarr;
       </a>
     </div>
 
@@ -56,13 +56,14 @@
     font-weight:    800;
     letter-spacing: -0.025em;
     line-height:    1.0;
+    visibility:     hidden; /* scramble handles reveal — no layout shift */
   }
 
   .statement__word--dim {
     color: var(--text-muted);
   }
 
-  /* ── Bio: two-column below the words ── */
+  /* ── Bio: two-column below ── */
   .statement__bio {
     display:               grid;
     grid-template-columns: 1fr 1fr;
@@ -76,7 +77,6 @@
     line-height: 1.8;
   }
 
-  /* Link lives in the second column, below the second paragraph */
   .statement__link {
     display:        inline-block;
     grid-column:    2;
@@ -105,8 +105,6 @@
       grid-template-columns: 1fr;
     }
 
-    .statement__link {
-      grid-column: 1;
-    }
+    .statement__link { grid-column: 1; }
   }
 </style>
