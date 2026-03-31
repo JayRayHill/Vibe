@@ -1,0 +1,134 @@
+---
+const links = [
+  { label: 'Work',  href: '#work'  },
+  { label: 'About', href: '#about' },
+];
+---
+
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="/" class="nav__logo" aria-label="Jay Ray Hill — Home">JRH</a>
+
+    <nav aria-label="Primary navigation">
+      <ul class="nav__links">
+        {links.map(({ label, href }) => (
+          <li><a href={href} class="nav__link">{label}</a></li>
+        ))}
+        <li>
+          <a href="mailto:hello@jayrayhill.com" class="nav__link nav__cta">
+            Let&rsquo;s Talk
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position:   fixed;
+    top:        0;
+    left:       0;
+    right:      0;
+    z-index:    100;
+    transition: background 0.4s ease, border-color 0.4s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav.scrolled {
+    background:          rgba(8, 8, 8, 0.88);
+    backdrop-filter:     blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom-color: var(--border);
+  }
+
+  .nav__inner {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    height:          var(--nav-h);
+  }
+
+  .nav__logo {
+    font-family:    var(--font-display);
+    font-size:      1rem;
+    font-weight:    700;
+    letter-spacing: 0.1em;
+    color:          var(--text);
+    transition:     color 0.2s;
+  }
+
+  .nav__logo:hover {
+    color: var(--accent);
+  }
+
+  .nav__links {
+    display:     flex;
+    align-items: center;
+    gap:         2.5rem;
+    list-style:  none;
+  }
+
+  .nav__link {
+    font-size:      0.8125rem;
+    font-weight:    400;
+    letter-spacing: 0.05em;
+    color:          var(--text-muted);
+    position:       relative;
+    transition:     color 0.2s;
+  }
+
+  .nav__link::after {
+    content:    '';
+    position:   absolute;
+    bottom:     -4px;
+    left:       0;
+    width:      0;
+    height:     1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav__link:hover {
+    color: var(--text);
+  }
+
+  .nav__link:hover::after {
+    width: 100%;
+  }
+
+  /* CTA button */
+  .nav__cta {
+    color:         var(--accent);
+    border:        1px solid rgba(57, 255, 20, 0.3);
+    padding:       0.45rem 1.1rem;
+    border-radius: 2px;
+    transition:    background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .nav__cta::after { display: none; }
+
+  .nav__cta:hover {
+    background:   var(--accent);
+    color:        var(--bg);
+    border-color: var(--accent);
+  }
+
+  /* Mobile — hide links, show only logo */
+  @media (max-width: 600px) {
+    .nav__links {
+      gap: 1.5rem;
+    }
+
+    .nav__link:not(.nav__cta) {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>

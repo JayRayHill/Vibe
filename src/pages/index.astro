@@ -1,0 +1,118 @@
+---
+import Layout  from '../layouts/Layout.astro';
+import Cursor  from '../components/Cursor.astro';
+import Nav     from '../components/Nav.astro';
+import Hero    from '../components/Hero.astro';
+import Work    from '../components/Work.astro';
+import About   from '../components/About.astro';
+---
+
+<Layout>
+  <Cursor />
+  <Nav />
+
+  <main id="main">
+    <Hero />
+    <Work />
+    <About />
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="footer__copy">&copy; {new Date().getFullYear()} Jay Ray Hill. All rights reserved.</span>
+      <nav class="footer__links" aria-label="Social links">
+        <a href="#" class="footer__link">LinkedIn</a>
+        <a href="#" class="footer__link">Dribbble</a>
+        <a href="#" class="footer__link">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .footer {
+    padding:    2.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer__inner {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    gap:             1rem;
+    flex-wrap:       wrap;
+  }
+
+  .footer__copy {
+    font-size: 0.8rem;
+    color:     var(--text-muted);
+  }
+
+  .footer__links {
+    display: flex;
+    gap:     1.75rem;
+  }
+
+  .footer__link {
+    font-size:  0.8rem;
+    color:      var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .footer__link:hover {
+    color: var(--accent);
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Scroll-reveal for section headers and about columns ──────
+  gsap.utils.toArray<HTMLElement>('[data-scroll-reveal]').forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: {
+        trigger:       el,
+        start:         'top 88%',
+        toggleActions: 'play none none none',
+      },
+      opacity:  0,
+      y:        32,
+      duration: 0.85,
+      ease:     'power3.out',
+    });
+  });
+
+  // ── Work items — staggered per row ───────────────────────────
+  gsap.utils.toArray<HTMLElement>('.work__item').forEach((item, i) => {
+    gsap.to(item, {
+      scrollTrigger: {
+        trigger:       item,
+        start:         'top 92%',
+        toggleActions: 'play none none none',
+      },
+      opacity:  1,
+      y:        0,
+      duration: 0.6,
+      delay:    i * 0.08,
+      ease:     'power2.out',
+    });
+  });
+
+  // ── Magnetic buttons ─────────────────────────────────────────
+  const magnetics = document.querySelectorAll<HTMLElement>('.magnetic');
+  magnetics.forEach((el) => {
+    el.addEventListener('mousemove', (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width  / 2;
+      const y = e.clientY - r.top  - r.height / 2;
+      gsap.to(el, { x: x * 0.28, y: y * 0.28, duration: 0.35, ease: 'power2.out' });
+    });
+
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.55)' });
+    });
+  });
+</script>

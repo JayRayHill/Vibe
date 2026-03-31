@@ -1,0 +1,236 @@
+---
+const projects = [
+  {
+    number:      '01',
+    title:       'Fintech Dashboard Redesign',
+    category:    'UX Design · Web App',
+    description: 'A ground-up redesign of a fintech dashboard that reduced user errors by 40% and lifted task-completion rates through clearer visual hierarchy and smarter interaction flows.',
+    year:        '2024',
+    tags:        ['UX Research', 'UI Design', 'Prototyping'],
+    href:        '#',
+  },
+  {
+    number:      '02',
+    title:       'Lifestyle Brand Digital Overhaul',
+    category:    'Web Design · E-commerce',
+    description: 'End-to-end brand and web redesign for a lifestyle brand — new design language, product flows, and a component system that drove a 3× lift in conversion rate.',
+    year:        '2024',
+    tags:        ['Brand', 'UI Design', 'Development'],
+    href:        '#',
+  },
+  {
+    number:      '03',
+    title:       'SaaS Design System',
+    category:    'Product Design · B2B',
+    description: 'Built a scalable design system and interface library for a B2B SaaS platform used by 10,000+ users — enabling faster shipping and visual consistency across teams.',
+    year:        '2023',
+    tags:        ['Design System', 'UX', 'Component Library'],
+    href:        '#',
+  },
+];
+---
+
+<section class="work" id="work">
+  <div class="container">
+
+    <div class="section-header" data-scroll-reveal>
+      <span class="section-label">Selected Work</span>
+      <h2 class="section-title">
+        Projects that<br /><em>move the needle.</em>
+      </h2>
+    </div>
+
+    <ul class="work__list">
+      {projects.map((p) => (
+        <li class="work__item">
+          <a href={p.href} class="work__link" target="_blank" rel="noopener noreferrer">
+
+            <div class="work__meta">
+              <span class="work__number">{p.number}</span>
+              <span class="work__year">{p.year}</span>
+            </div>
+
+            <div class="work__body">
+              <div class="work__top">
+                <h3 class="work__title">{p.title}</h3>
+                <span class="work__category">{p.category}</span>
+              </div>
+              <p class="work__desc">{p.description}</p>
+              <ul class="work__tags" aria-label="Tags">
+                {p.tags.map((tag) => <li class="work__tag">{tag}</li>)}
+              </ul>
+            </div>
+
+            <div class="work__arrow" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17L17 7M17 7H7M17 7V17"
+                  stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+          </a>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .work {
+    padding:    var(--section-pad) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* List */
+  .work__list {
+    list-style: none;
+  }
+
+  .work__item {
+    border-top: 1px solid var(--border);
+    opacity:    0;
+    transform:  translateY(24px);
+  }
+
+  .work__item:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Row link */
+  .work__link {
+    display:               grid;
+    grid-template-columns: 72px 1fr 40px;
+    gap:                   2rem;
+    align-items:           start;
+    padding:               2.5rem 0;
+    position:              relative;
+  }
+
+  /* Hover tint — full bleed */
+  .work__link::before {
+    content:    '';
+    position:   absolute;
+    top:        0;
+    bottom:     0;
+    left:       calc(var(--gutter) * -1);
+    right:      calc(var(--gutter) * -1);
+    background: var(--accent-dim);
+    opacity:    0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .work__link:hover::before       { opacity: 1; }
+  .work__link:hover .work__title  { color: var(--accent); }
+  .work__link:hover .work__arrow  {
+    transform: translateX(5px) translateY(-5px);
+    color:     var(--accent);
+  }
+
+  /* Meta column */
+  .work__meta {
+    display:        flex;
+    flex-direction: column;
+    gap:            0.4rem;
+    padding-top:    0.2rem;
+    position:       relative;
+    z-index:        1;
+  }
+
+  .work__number {
+    font-family:    var(--font-display);
+    font-size:      0.7rem;
+    font-weight:    600;
+    letter-spacing: 0.12em;
+    color:          var(--text-muted);
+  }
+
+  .work__year {
+    font-size: 0.7rem;
+    color:     var(--text-muted);
+  }
+
+  /* Body column */
+  .work__body {
+    position: relative;
+    z-index:  1;
+  }
+
+  .work__top {
+    display:         flex;
+    align-items:     baseline;
+    justify-content: space-between;
+    gap:             1.5rem;
+    margin-bottom:   0.625rem;
+    flex-wrap:       wrap;
+  }
+
+  .work__title {
+    font-family:    var(--font-display);
+    font-size:      clamp(1.2rem, 2.4vw, 1.65rem);
+    font-weight:    700;
+    letter-spacing: -0.015em;
+    transition:     color 0.2s;
+  }
+
+  .work__category {
+    font-size:      0.72rem;
+    color:          var(--text-muted);
+    letter-spacing: 0.05em;
+    white-space:    nowrap;
+    flex-shrink:    0;
+  }
+
+  .work__desc {
+    font-size:     0.9375rem;
+    color:         var(--text-muted);
+    line-height:   1.65;
+    max-width:     620px;
+    margin-bottom: 1rem;
+  }
+
+  .work__tags {
+    display:    flex;
+    gap:        0.45rem;
+    flex-wrap:  wrap;
+    list-style: none;
+  }
+
+  .work__tag {
+    font-size:      0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding:        0.3rem 0.7rem;
+    border:         1px solid var(--border);
+    border-radius:  2px;
+    color:          var(--text-muted);
+  }
+
+  /* Arrow column */
+  .work__arrow {
+    position:   relative;
+    z-index:    1;
+    color:      var(--text-muted);
+    transition: transform 0.3s ease, color 0.2s;
+    padding-top: 0.2rem;
+    justify-self: end;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .work__link {
+      grid-template-columns: 1fr;
+      gap:                   0.75rem;
+    }
+
+    .work__meta {
+      flex-direction: row;
+      gap:            1rem;
+    }
+
+    .work__arrow  { display: none; }
+    .work__top    { flex-direction: column; gap: 0.25rem; }
+  }
+</style>
