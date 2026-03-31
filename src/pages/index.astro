@@ -3,24 +3,29 @@ import Layout    from '../layouts/Layout.astro';
 import Cursor    from '../components/Cursor.astro';
 import Nav       from '../components/Nav.astro';
 import Hero      from '../components/Hero.astro';
-import Work      from '../components/Work.astro';
 import Services  from '../components/Services.astro';
+import Work      from '../components/Work.astro';
 import Skills    from '../components/Skills.astro';
 import Statement from '../components/Statement.astro';
 import Contact   from '../components/Contact.astro';
 ---
 
 <Layout
-  title="Jaron Hill — Web Developer & UX Designer"
-  description="Portfolio of Jaron Hill — web developer and UX designer at Unique Supply, building systems that work and look beautiful."
+  title="Jaron Hill — Web Designer & UX"
+  description="Portfolio of Jaron Hill — web designer and UX at Unique Supply, building systems that work and look beautiful."
 >
+  <!-- ── Page intro overlay — white screen that slides away on load ── -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <span class="intro__name">JARON HILL</span>
+  </div>
+
   <Cursor />
   <Nav />
 
   <main id="main">
     <Hero />
-    <Work />
     <Services />
+    <Work />
     <Skills />
     <Statement />
     <Contact />
@@ -31,7 +36,7 @@ import Contact   from '../components/Contact.astro';
 
       <div class="footer__left">
         <span class="footer__name">Jaron Hill</span>
-        <span class="footer__caption">Web Development &amp; UX Design</span>
+        <span class="footer__caption">Web Design &amp; UX</span>
       </div>
 
       <nav class="footer__nav" aria-label="Footer navigation">
@@ -56,6 +61,28 @@ import Contact   from '../components/Contact.astro';
 </Layout>
 
 <style>
+  /* ── Page intro overlay ── */
+  .intro {
+    position:        fixed;
+    inset:           0;
+    z-index:         9999;
+    background:      #ffffff;
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    pointer-events:  none;
+  }
+
+  .intro__name {
+    font-family:    var(--font-display);
+    font-size:      clamp(2rem, 6vw, 5rem);
+    font-weight:    800;
+    letter-spacing: -0.025em;
+    color:          #080808;
+    opacity:        0;
+  }
+
+  /* ── Footer ── */
   .footer {
     border-top: 1px solid var(--border);
     padding:    clamp(3rem, 5vw, 5rem) 0 2rem;
@@ -133,73 +160,32 @@ import Contact   from '../components/Contact.astro';
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // ── Fade-up: generic scroll reveal ──────────────────────────
-  gsap.utils.toArray<HTMLElement>('[data-fade-up]').forEach((el) => {
-    gsap.from(el, {
-      scrollTrigger: {
-        trigger:       el,
-        start:         'top 88%',
-        toggleActions: 'play none none none',
-      },
-      opacity:  0,
-      y:        40,
-      duration: 0.85,
-      ease:     'power3.out',
-    });
+  // ─────────────────────────────────────────────────────────────
+  // PAGE INTRO — white screen fades name in, then slides up
+  // revealing the dark site beneath
+  // ─────────────────────────────────────────────────────────────
+  const intro     = document.getElementById('intro')!;
+  const introName = intro.querySelector('.intro__name') as HTMLElement;
+  const introTl   = gsap.timeline({
+    onComplete: () => {
+      intro.style.display = 'none'; // remove from paint after exit
+    },
   });
 
-  // ── Skills pills: stagger in ─────────────────────────────────
-  const skillsEl = document.querySelector('[data-stagger]');
-  if (skillsEl) {
-    gsap.to(skillsEl.querySelectorAll('.skills__pill'), {
-      scrollTrigger: {
-        trigger:       skillsEl,
-        start:         'top 88%',
-        toggleActions: 'play none none none',
-      },
-      opacity:   1,
-      scale:     1,
-      duration:  0.45,
-      stagger:   0.045,
-      ease:      'power2.out',
-    });
-  }
+  introTl
+    .to(introName, { opacity: 1, duration: 0.45, ease: 'power2.out' })
+    .to(introName, { opacity: 0, duration: 0.3,  ease: 'power2.in' }, '+=0.25')
+    .to(intro,     {
+        yPercent:  -100,
+        duration:  0.75,
+        ease:      'power3.inOut',
+      }, '-=0.1');
 
-  // ── Work cards: stagger up ───────────────────────────────────
-  gsap.utils.toArray<HTMLElement>('.work__card').forEach((card, i) => {
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger:       card,
-        start:         'top 92%',
-        toggleActions: 'play none none none',
-      },
-      opacity:  0,
-      y:        32,
-      duration: 0.6,
-      delay:    i * 0.07,
-      ease:     'power2.out',
-    });
-  });
-
-  // ── Services items: stagger ──────────────────────────────────
-  gsap.utils.toArray<HTMLElement>('.services__item').forEach((item, i) => {
-    gsap.from(item, {
-      scrollTrigger: {
-        trigger:       item,
-        start:         'top 90%',
-        toggleActions: 'play none none none',
-      },
-      opacity:  0,
-      y:        24,
-      duration: 0.65,
-      delay:    i * 0.06,
-      ease:     'power2.out',
-    });
-  });
-
-  // ── Text Scramble Engine ─────────────────────────────────────
-  // Charset: Katakana + symbols → looks like a nonexistent alien language
-  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヴ#@$%&!?><\\|/~^*';
+  // ─────────────────────────────────────────────────────────────
+  // TEXT SCRAMBLE ENGINE
+  // Charset: Katakana + symbols for the "alien language" feel
+  // ─────────────────────────────────────────────────────────────
+  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヴ#@$%&!?><|/~^*';
 
   class TextScramble {
     private el:      HTMLElement;
@@ -211,12 +197,13 @@ import Contact   from '../components/Contact.astro';
     constructor(el: HTMLElement) { this.el = el; }
 
     run(text: string): Promise<void> {
-      const len     = text.length;
       const promise = new Promise<void>((res) => (this.resolve = res));
-      this.queue    = Array.from({ length: len }, (_, i) => ({
-        to:    text[i],
-        start: Math.floor(i * 1.2),                // stagger start per character
-        end:   Math.floor(i * 1.2) + Math.floor(6 + Math.random() * 8),
+      this.queue = Array.from(text, (char, i) => ({
+        to:    char,
+        // Stagger: each character waits a little longer than the last
+        start: Math.floor(i * 3),
+        // Each character scrambles for 20-36 frames before locking in
+        end:   Math.floor(i * 3) + 20 + Math.floor(Math.random() * 16),
         char:  '',
       }));
       cancelAnimationFrame(this.raf);
@@ -232,14 +219,14 @@ import Contact   from '../components/Contact.astro';
       for (const item of this.queue) {
         if (this.frame >= item.end) {
           complete++;
-          out += item.to;
+          out += item.to === ' ' ? '&nbsp;' : item.to;
         } else if (this.frame >= item.start) {
+          // Refresh the scramble char ~30% of frames for a flicker feel
           if (!item.char || Math.random() < 0.3) {
             item.char = CHARS[Math.floor(Math.random() * CHARS.length)];
           }
           out += `<span class="sc">${item.char}</span>`;
         } else {
-          // not started yet — show a placeholder dim char
           out += `<span class="sc sc--dim">_</span>`;
         }
       }
@@ -250,27 +237,102 @@ import Contact   from '../components/Contact.astro';
         this.frame++;
         this.raf = requestAnimationFrame(() => this.tick());
       } else {
-        // Restore plain textContent so innerHTML stays clean
-        this.el.textContent = this.el.textContent;
+        this.el.textContent = this.el.textContent; // clean up innerHTML
         this.resolve();
       }
     }
   }
 
-  // ── Apply scramble on scroll enter ───────────────────────────
-  document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el) => {
+  // ─────────────────────────────────────────────────────────────
+  // Apply scramble to ALL headings (h2, h3) + [data-scramble]
+  // Fires once when the element enters the viewport
+  // ─────────────────────────────────────────────────────────────
+  const scrambleTargets = document.querySelectorAll<HTMLElement>(
+    'h2, h3, [data-scramble]'
+  );
+
+  scrambleTargets.forEach((el) => {
     const original = el.textContent?.trim() ?? '';
-    el.textContent = '';  // hide until triggered
+    if (!original) return;
+
+    // Hide text until triggered
+    el.textContent = '';
 
     ScrollTrigger.create({
       trigger:  el,
-      start:    'top 88%',
+      start:    'top 90%',
       once:     true,
       onEnter:  () => new TextScramble(el).run(original),
     });
   });
 
-  // ── Magnetic buttons ─────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────
+  // Fade-up: generic scroll reveal
+  // ─────────────────────────────────────────────────────────────
+  gsap.utils.toArray<HTMLElement>('[data-fade-up]').forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: {
+        trigger:       el,
+        start:         'top 88%',
+        toggleActions: 'play none none none',
+      },
+      opacity:  0,
+      y:        40,
+      duration: 0.85,
+      ease:     'power3.out',
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────
+  // Skills pills — stagger scale in
+  // ─────────────────────────────────────────────────────────────
+  const skillsEl = document.querySelector('[data-stagger]');
+  if (skillsEl) {
+    gsap.to(skillsEl.querySelectorAll('.skills__pill'), {
+      scrollTrigger: {
+        trigger:       skillsEl,
+        start:         'top 88%',
+        toggleActions: 'play none none none',
+      },
+      opacity:  1,
+      scale:    1,
+      duration: 0.45,
+      stagger:  0.04,
+      ease:     'power2.out',
+    });
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Work cards — stagger up
+  // ─────────────────────────────────────────────────────────────
+  gsap.utils.toArray<HTMLElement>('.work__card').forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: { trigger: card, start: 'top 92%', toggleActions: 'play none none none' },
+      opacity:  0,
+      y:        32,
+      duration: 0.6,
+      delay:    i * 0.07,
+      ease:     'power2.out',
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────
+  // Services items — stagger up
+  // ─────────────────────────────────────────────────────────────
+  gsap.utils.toArray<HTMLElement>('.services__item').forEach((item, i) => {
+    gsap.from(item, {
+      scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' },
+      opacity:  0,
+      y:        24,
+      duration: 0.65,
+      delay:    i * 0.06,
+      ease:     'power2.out',
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────
+  // Magnetic buttons
+  // ─────────────────────────────────────────────────────────────
   document.querySelectorAll<HTMLElement>('.magnetic').forEach((el) => {
     el.addEventListener('mousemove', (e: MouseEvent) => {
       const r = el.getBoundingClientRect();
