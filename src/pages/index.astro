@@ -272,37 +272,30 @@ import Contact   from '../components/Contact.astro';
   const NAV_H        = 64;
   const PX_PER_ITEM  = 320; // scroll distance allocated per item
 
-  // Start all items invisible, no positional offset — pure fade
-  gsap.set(serviceItems, { opacity: 0 });
+  // Show first item, hide the rest
+  gsap.set(serviceItems[0], { opacity: 1 });
+  gsap.set(serviceItems.slice(1), { opacity: 0 });
 
-  const animated = new Set<number>();
-
-  const revealItem = (item: HTMLElement) =>
-    gsap.to(item, { opacity: 1, duration: 0.7, ease: 'power2.out' });
-
-  ScrollTrigger.create({
-    trigger:       '#services',
-    start:         `top top+=${NAV_H}`,
-    end:           `+=${serviceItems.length * PX_PER_ITEM}`,
-    pin:           true,
-    anticipatePin: 1,
-    // Fire item 0 the moment the section pins — no blank state
-    onEnter: () => {
-      if (!animated.has(0)) {
-        animated.add(0);
-        revealItem(serviceItems[0]);
-      }
+  // Scrubbed timeline: each item crossfades into the next as you scroll.
+  // scrub ties the animation directly to scroll position so the pace
+  // feels completely in the user's control.
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger:       '#services',
+      start:         `top top+=${NAV_H}`,
+      end:           `+=${serviceItems.length * PX_PER_ITEM}`,
+      pin:           true,
+      anticipatePin: 1,
+      scrub:         0.8,
     },
-    onUpdate: (self) => {
-      serviceItems.forEach((item, i) => {
-        if (animated.has(i)) return;
-        // Items 1 and 2 appear at 1/3 and 2/3 of the pin scroll range
-        if (self.progress >= i / serviceItems.length) {
-          animated.add(i);
-          revealItem(item);
-        }
-      });
-    },
+  });
+
+  serviceItems.forEach((item, i) => {
+    if (i < serviceItems.length - 1) {
+      // Fade out current, fade in next — simultaneous crossfade
+      tl.to(item,              { opacity: 0, duration: 0.5, ease: 'power1.inOut' }, i + 0.3);
+      tl.to(serviceItems[i + 1], { opacity: 1, duration: 0.5, ease: 'power1.inOut' }, i + 0.3);
+    }
   });
 
   // ─────────────────────────────────────────────────────────────
