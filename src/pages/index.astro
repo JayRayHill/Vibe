@@ -238,8 +238,10 @@ import Contact   from '../components/Contact.astro';
   // FIX: use visibility:hidden (not textContent='') so elements
   // keep their dimensions — zero layout shift on trigger.
   // ─────────────────────────────────────────────────────────────
+  // Exclude everything inside #services — the pin handles that section's
+  // own reveal, and scramble's ScrollTrigger breaks inside a pinned element
   const scrambleTargets = document.querySelectorAll<HTMLElement>(
-    'h2, h3, h4, h5, [data-scramble]'
+    'h2:not(#services *), h3:not(#services *), h4:not(#services *), h5:not(#services *), [data-scramble]:not(#services *)'
   );
 
   scrambleTargets.forEach((el) => {
@@ -275,24 +277,29 @@ import Contact   from '../components/Contact.astro';
 
   const animated = new Set<number>();
 
+  const revealItem = (item: HTMLElement) =>
+    gsap.to(item, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+
   ScrollTrigger.create({
     trigger:       '#services',
     start:         `top top+=${NAV_H}`,
     end:           `+=${serviceItems.length * PX_PER_ITEM}`,
     pin:           true,
     anticipatePin: 1,
+    // Fire item 0 the moment the section pins — no blank state
+    onEnter: () => {
+      if (!animated.has(0)) {
+        animated.add(0);
+        revealItem(serviceItems[0]);
+      }
+    },
     onUpdate: (self) => {
       serviceItems.forEach((item, i) => {
-        // Each item gets an equal slice of the total scroll progress
-        const threshold = i / serviceItems.length;
-        if (self.progress >= threshold && !animated.has(i)) {
+        if (animated.has(i)) return;
+        // Items 1 and 2 appear at 1/3 and 2/3 of the pin scroll range
+        if (self.progress >= i / serviceItems.length) {
           animated.add(i);
-          gsap.to(item, {
-            opacity:  1,
-            y:        0,
-            duration: 0.55,
-            ease:     'power3.out',
-          });
+          revealItem(item);
         }
       });
     },
