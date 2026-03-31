@@ -163,6 +163,18 @@ img { max-width: 100%; display: block; }
   min-height: 140px;
 }
 
+/* ─── Text Scramble chars ───────────────────────────────────── */
+/* Cycling "alien" characters that appear during the scramble reveal */
+.sc {
+  color:   var(--accent);
+  opacity: 0.7;
+}
+
+.sc--dim {
+  color:   var(--text-muted);
+  opacity: 0.3;
+}
+
 /* ─── Accessibility ──────────────────────────────────────────── */
 .visually-hidden {
   position:    absolute;

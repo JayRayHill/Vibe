@@ -6,7 +6,10 @@
 
     <div class="contact__header" data-fade-up>
       <span class="section-tag">Get In Touch</span>
-      <h2 class="contact__heading">Let&rsquo;s make it<br />happen.</h2>
+      <h2 class="contact__heading">
+        <span data-scramble>Let's make it</span>
+        <span data-scramble>happen.</span>
+      </h2>
       <p class="contact__sub">
         Have a project in mind, an idea to explore, or just want to talk
         shop? Send it over &mdash; I read every message.
@@ -87,6 +90,10 @@
     letter-spacing: -0.025em;
     line-height:    1.0;
     margin-bottom:  1.25rem;
+  }
+
+  .contact__heading span {
+    display: block;
   }
 
   .contact__sub {

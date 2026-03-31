@@ -197,18 +197,77 @@ import Contact   from '../components/Contact.astro';
     });
   });
 
-  // ── Statement words: stagger ─────────────────────────────────
-  gsap.from('.statement__word', {
-    scrollTrigger: {
-      trigger:       '.statement__identity',
-      start:         'top 85%',
-      toggleActions: 'play none none none',
-    },
-    opacity:  0,
-    x:        -30,
-    duration: 0.7,
-    stagger:  0.1,
-    ease:     'power3.out',
+  // ── Text Scramble Engine ─────────────────────────────────────
+  // Charset: Katakana + symbols → looks like a nonexistent alien language
+  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヴ#@$%&!?><\\|/~^*';
+
+  class TextScramble {
+    private el:      HTMLElement;
+    private resolve: () => void = () => {};
+    private raf:     number     = 0;
+    private frame:   number     = 0;
+    private queue:   { to: string; start: number; end: number; char: string }[] = [];
+
+    constructor(el: HTMLElement) { this.el = el; }
+
+    run(text: string): Promise<void> {
+      const len     = text.length;
+      const promise = new Promise<void>((res) => (this.resolve = res));
+      this.queue    = Array.from({ length: len }, (_, i) => ({
+        to:    text[i],
+        start: Math.floor(i * 1.2),                // stagger start per character
+        end:   Math.floor(i * 1.2) + Math.floor(6 + Math.random() * 8),
+        char:  '',
+      }));
+      cancelAnimationFrame(this.raf);
+      this.frame = 0;
+      this.tick();
+      return promise;
+    }
+
+    private tick() {
+      let out      = '';
+      let complete = 0;
+
+      for (const item of this.queue) {
+        if (this.frame >= item.end) {
+          complete++;
+          out += item.to;
+        } else if (this.frame >= item.start) {
+          if (!item.char || Math.random() < 0.3) {
+            item.char = CHARS[Math.floor(Math.random() * CHARS.length)];
+          }
+          out += `<span class="sc">${item.char}</span>`;
+        } else {
+          // not started yet — show a placeholder dim char
+          out += `<span class="sc sc--dim">_</span>`;
+        }
+      }
+
+      this.el.innerHTML = out;
+
+      if (complete < this.queue.length) {
+        this.frame++;
+        this.raf = requestAnimationFrame(() => this.tick());
+      } else {
+        // Restore plain textContent so innerHTML stays clean
+        this.el.textContent = this.el.textContent;
+        this.resolve();
+      }
+    }
+  }
+
+  // ── Apply scramble on scroll enter ───────────────────────────
+  document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el) => {
+    const original = el.textContent?.trim() ?? '';
+    el.textContent = '';  // hide until triggered
+
+    ScrollTrigger.create({
+      trigger:  el,
+      start:    'top 88%',
+      once:     true,
+      onEnter:  () => new TextScramble(el).run(original),
+    });
   });
 
   // ── Magnetic buttons ─────────────────────────────────────────
