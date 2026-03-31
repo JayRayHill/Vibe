@@ -1,0 +1,78 @@
+---
+const skills = [
+  { label: 'JavaScript',       category: 'dev'    },
+  { label: 'TypeScript',       category: 'dev'    },
+  { label: 'React',            category: 'dev'    },
+  { label: 'HTML & CSS',       category: 'dev'    },
+  { label: 'Node.js',          category: 'dev'    },
+  { label: 'Astro',            category: 'dev'    },
+  { label: 'Figma',            category: 'design' },
+  { label: 'UX Research',      category: 'design' },
+  { label: 'Prototyping',      category: 'design' },
+  { label: 'Design Systems',   category: 'design' },
+  { label: 'Web Performance',  category: 'dev'    },
+  { label: 'Accessibility',    category: 'design' },
+  { label: 'Git',              category: 'dev'    },
+  { label: 'Responsive Design',category: 'design' },
+];
+---
+
+<section class="skills" id="skills">
+  <div class="container">
+
+    <div class="skills__header" data-fade-up>
+      <span class="section-tag">Skills &amp; Tools</span>
+    </div>
+
+    <ul class="skills__grid" data-stagger>
+      {skills.map((s) => (
+        <li class={`skills__pill skills__pill--${s.category}`}>
+          {s.label}
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .skills {
+    padding:    var(--section-pad) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .skills__header {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .skills__grid {
+    display:    flex;
+    flex-wrap:  wrap;
+    gap:        0.6rem;
+    list-style: none;
+  }
+
+  .skills__pill {
+    font-size:      0.75rem;
+    letter-spacing: 0.08em;
+    padding:        0.55rem 1.1rem;
+    border-radius:  999px;
+    border:         1px solid var(--border-light);
+    color:          var(--text-soft);
+    background:     var(--surface);
+    transition:     border-color 0.25s, color 0.25s, background 0.25s;
+    opacity:        0;
+    transform:      scale(0.92);
+  }
+
+  .skills__pill:hover {
+    border-color: var(--accent);
+    color:        var(--accent);
+    background:   var(--accent-dim);
+  }
+
+  /* dev pills get a very subtle accent border at rest */
+  .skills__pill--dev {
+    border-color: rgba(57, 255, 20, 0.12);
+  }
+</style>

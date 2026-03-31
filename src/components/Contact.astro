@@ -1,0 +1,124 @@
+---
+---
+
+<section class="contact" id="contact">
+  <div class="container">
+
+    <div class="contact__header" data-fade-up>
+      <span class="section-tag">Get In Touch</span>
+      <h2 class="contact__heading">Let&rsquo;s make it<br />happen.</h2>
+      <p class="contact__sub">
+        Have a project in mind, an idea to explore, or just want to talk
+        shop? Send it over &mdash; I read every message.
+      </p>
+    </div>
+
+    <!-- Netlify Forms handles submission serverlessly -->
+    <form
+      class="contact__form"
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      data-fade-up
+    >
+      <!-- Honeypot -->
+      <p class="visually-hidden">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+      <input type="hidden" name="form-name" value="contact" />
+
+      <div class="contact__row">
+        <div class="field">
+          <label for="name">Project Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="What are we calling it?"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="email">Your Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="hello@example.com"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="details">Project Details</label>
+        <textarea
+          id="details"
+          name="details"
+          placeholder="Tell me about the project — what it is, where it's at, and what you need."
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn--primary contact__submit magnetic">
+        Send it &nbsp;&rarr;
+      </button>
+    </form>
+
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding:    var(--section-pad) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .contact__header {
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    max-width:     560px;
+  }
+
+  .contact__heading {
+    font-family:    var(--font-display);
+    font-size:      clamp(2.5rem, 6vw, 5.5rem);
+    font-weight:    800;
+    letter-spacing: -0.025em;
+    line-height:    1.0;
+    margin-bottom:  1.25rem;
+  }
+
+  .contact__sub {
+    font-size:   1rem;
+    color:       var(--text-soft);
+    line-height: 1.75;
+  }
+
+  /* Form layout */
+  .contact__form {
+    max-width: 680px;
+  }
+
+  .contact__row {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+    gap:                   1.25rem;
+  }
+
+  .contact__submit {
+    margin-top: 0.5rem;
+    min-width:  160px;
+  }
+
+  /* Success / error state (Netlify redirect is default, but style just in case) */
+  .contact__form[data-success] .contact__submit::after {
+    content: ' ✓';
+  }
+
+  @media (max-width: 560px) {
+    .contact__row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

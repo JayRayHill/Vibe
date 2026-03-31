@@ -1,31 +1,41 @@
 ---
+const featured = {
+  number:  '01',
+  title:   'Unique Supply Platform',
+  year:    '2024',
+  type:    'Product Design · Web Development',
+  desc:    'A ground-up redesign of the core digital platform at Unique Supply — streamlining supplier relationships, inventory flows, and internal tooling into a single, coherent product experience.',
+  tags:    ['UX Research', 'UI Design', 'React', 'Design System'],
+  href:    '#',
+};
+
 const projects = [
   {
-    number:      '01',
-    title:       'Fintech Dashboard Redesign',
-    category:    'UX Design · Web App',
-    description: 'A ground-up redesign of a fintech dashboard that reduced user errors by 40% and lifted task-completion rates through clearer visual hierarchy and smarter interaction flows.',
-    year:        '2024',
-    tags:        ['UX Research', 'UI Design', 'Prototyping'],
-    href:        '#',
+    number:  '02',
+    title:   'Ops Dashboard',
+    year:    '2023',
+    type:    'UX Design · Internal Tool',
+    desc:    'Redesigned the internal operations dashboard used daily by the Unique Supply team, cutting task time by 35% through clearer hierarchy and smarter interaction flows.',
+    tags:    ['UX', 'Figma', 'Data Viz'],
+    href:    '#',
   },
   {
-    number:      '02',
-    title:       'Lifestyle Brand Digital Overhaul',
-    category:    'Web Design · E-commerce',
-    description: 'End-to-end brand and web redesign for a lifestyle brand — new design language, product flows, and a component system that drove a 3× lift in conversion rate.',
-    year:        '2024',
-    tags:        ['Brand', 'UI Design', 'Development'],
-    href:        '#',
+    number:  '03',
+    title:   'Brand Design System',
+    year:    '2023',
+    type:    'Design Systems · Frontend',
+    desc:    'Built a scalable component library and design token system that unified all digital touchpoints and enabled faster, more consistent shipping across the team.',
+    tags:    ['Design Tokens', 'Components', 'Documentation'],
+    href:    '#',
   },
   {
-    number:      '03',
-    title:       'SaaS Design System',
-    category:    'Product Design · B2B',
-    description: 'Built a scalable design system and interface library for a B2B SaaS platform used by 10,000+ users — enabling faster shipping and visual consistency across teams.',
-    year:        '2023',
-    tags:        ['Design System', 'UX', 'Component Library'],
-    href:        '#',
+    number:  '04',
+    title:   'Marketing Site Rebuild',
+    year:    '2022',
+    type:    'Web Design · Development',
+    desc:    'Complete redesign and build of a marketing site — performance-first, conversion-focused, and fully responsive with sub-1s load times.',
+    tags:    ['Astro', 'CSS', 'Performance'],
+    href:    '#',
   },
 ];
 ---
@@ -33,42 +43,90 @@ const projects = [
 <section class="work" id="work">
   <div class="container">
 
-    <div class="section-header" data-scroll-reveal>
-      <span class="section-label">Selected Work</span>
-      <h2 class="section-title">
-        Projects that<br /><em>move the needle.</em>
-      </h2>
+    <div class="work__header" data-fade-up>
+      <span class="section-tag">Selected Works</span>
     </div>
 
-    <ul class="work__list">
-      {projects.map((p) => (
-        <li class="work__item">
-          <a href={p.href} class="work__link" target="_blank" rel="noopener noreferrer">
-
-            <div class="work__meta">
-              <span class="work__number">{p.number}</span>
-              <span class="work__year">{p.year}</span>
+    <!-- ── Featured project ── -->
+    <article class="work__featured" data-fade-up>
+      <a href={featured.href} class="work__featured-link" target="_blank" rel="noopener noreferrer">
+        <div class="work__featured-visual mock mock--featured" aria-hidden="true">
+          <!-- CSS-art UI mockup -->
+          <div class="mock__bar">
+            <div class="mock__dots">
+              <span></span><span></span><span></span>
             </div>
-
-            <div class="work__body">
-              <div class="work__top">
-                <h3 class="work__title">{p.title}</h3>
-                <span class="work__category">{p.category}</span>
+          </div>
+          <div class="mock__content">
+            <div class="mock__sidebar">
+              <div class="mock__sidebar-item is-active"></div>
+              <div class="mock__sidebar-item"></div>
+              <div class="mock__sidebar-item"></div>
+              <div class="mock__sidebar-item"></div>
+            </div>
+            <div class="mock__main">
+              <div class="mock__stat-row">
+                <div class="mock__stat"></div>
+                <div class="mock__stat"></div>
+                <div class="mock__stat"></div>
               </div>
-              <p class="work__desc">{p.description}</p>
-              <ul class="work__tags" aria-label="Tags">
-                {p.tags.map((tag) => <li class="work__tag">{tag}</li>)}
+              <div class="mock__chart"></div>
+              <div class="mock__table">
+                <div class="mock__table-row mock__table-row--header"></div>
+                <div class="mock__table-row"></div>
+                <div class="mock__table-row"></div>
+                <div class="mock__table-row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work__featured-info">
+          <div class="work__featured-meta">
+            <span class="work__num">{featured.number}</span>
+            <span class="work__type">{featured.type}</span>
+            <span class="work__year">{featured.year}</span>
+          </div>
+          <h2 class="work__featured-title">{featured.title}</h2>
+          <p class="work__featured-desc">{featured.desc}</p>
+          <ul class="work__tags">
+            {featured.tags.map(t => <li>{t}</li>)}
+          </ul>
+          <span class="work__cta-hint">View case study →</span>
+        </div>
+      </a>
+    </article>
+
+    <hr class="section-divider" />
+
+    <!-- ── Project grid ── -->
+    <ul class="work__grid">
+      {projects.map((p, i) => (
+        <li class="work__card" data-fade-up style={`--delay: ${i * 0.07}s`}>
+          <a href={p.href} class="work__card-link" target="_blank" rel="noopener noreferrer">
+            <div class={`mock mock--card mock--style-${i + 1}`} aria-hidden="true">
+              <div class="mock__bar">
+                <div class="mock__dots"><span></span><span></span><span></span></div>
+              </div>
+              <div class="mock__card-body">
+                <div class="mock__card-line mock__card-line--wide"></div>
+                <div class="mock__card-line"></div>
+                <div class="mock__card-line mock__card-line--narrow"></div>
+                <div class="mock__card-block"></div>
+              </div>
+            </div>
+            <div class="work__card-info">
+              <div class="work__card-top">
+                <span class="work__num">{p.number}</span>
+                <span class="work__year">{p.year}</span>
+              </div>
+              <h3 class="work__card-title">{p.title}</h3>
+              <p class="work__card-type">{p.type}</p>
+              <p class="work__card-desc">{p.desc}</p>
+              <ul class="work__tags work__tags--sm">
+                {p.tags.map(t => <li>{t}</li>)}
               </ul>
             </div>
-
-            <div class="work__arrow" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17L17 7M17 7H7M17 7V17"
-                  stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-
           </a>
         </li>
       ))}
@@ -79,158 +137,313 @@ const projects = [
 
 <style>
   .work {
-    padding:    var(--section-pad) 0;
-    border-top: 1px solid var(--border);
+    padding: var(--section-pad) 0;
   }
 
-  /* List */
-  .work__list {
-    list-style: none;
+  .work__header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .work__item {
-    border-top: 1px solid var(--border);
-    opacity:    0;
-    transform:  translateY(24px);
+  /* ── Featured ── */
+  .work__featured {
+    margin-bottom: clamp(3rem, 6vw, 5rem);
   }
 
-  .work__item:last-child {
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* Row link */
-  .work__link {
+  .work__featured-link {
     display:               grid;
-    grid-template-columns: 72px 1fr 40px;
-    gap:                   2rem;
-    align-items:           start;
-    padding:               2.5rem 0;
-    position:              relative;
+    grid-template-columns: 1fr 1fr;
+    gap:                   clamp(2rem, 4vw, 5rem);
+    align-items:           center;
+    transition:            opacity 0.2s;
   }
 
-  /* Hover tint — full bleed */
-  .work__link::before {
-    content:    '';
-    position:   absolute;
-    top:        0;
-    bottom:     0;
-    left:       calc(var(--gutter) * -1);
-    right:      calc(var(--gutter) * -1);
-    background: var(--accent-dim);
-    opacity:    0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
+  .work__featured-link:hover { opacity: 0.92; }
+  .work__featured-link:hover .work__cta-hint { color: var(--accent); }
 
-  .work__link:hover::before       { opacity: 1; }
-  .work__link:hover .work__title  { color: var(--accent); }
-  .work__link:hover .work__arrow  {
-    transform: translateX(5px) translateY(-5px);
-    color:     var(--accent);
-  }
-
-  /* Meta column */
-  .work__meta {
-    display:        flex;
-    flex-direction: column;
-    gap:            0.4rem;
-    padding-top:    0.2rem;
-    position:       relative;
-    z-index:        1;
-  }
-
-  .work__number {
-    font-family:    var(--font-display);
-    font-size:      0.7rem;
-    font-weight:    600;
-    letter-spacing: 0.12em;
-    color:          var(--text-muted);
-  }
-
-  .work__year {
-    font-size: 0.7rem;
-    color:     var(--text-muted);
-  }
-
-  /* Body column */
-  .work__body {
-    position: relative;
-    z-index:  1;
-  }
-
-  .work__top {
-    display:         flex;
-    align-items:     baseline;
-    justify-content: space-between;
-    gap:             1.5rem;
-    margin-bottom:   0.625rem;
-    flex-wrap:       wrap;
-  }
-
-  .work__title {
-    font-family:    var(--font-display);
-    font-size:      clamp(1.2rem, 2.4vw, 1.65rem);
-    font-weight:    700;
-    letter-spacing: -0.015em;
-    transition:     color 0.2s;
-  }
-
-  .work__category {
-    font-size:      0.72rem;
-    color:          var(--text-muted);
-    letter-spacing: 0.05em;
-    white-space:    nowrap;
-    flex-shrink:    0;
-  }
-
-  .work__desc {
-    font-size:     0.9375rem;
-    color:         var(--text-muted);
-    line-height:   1.65;
-    max-width:     620px;
+  .work__featured-meta {
+    display:     flex;
+    align-items: center;
+    gap:         1.25rem;
     margin-bottom: 1rem;
   }
 
-  .work__tags {
-    display:    flex;
-    gap:        0.45rem;
-    flex-wrap:  wrap;
-    list-style: none;
+  .work__featured-title {
+    font-family:    var(--font-display);
+    font-size:      clamp(2rem, 4vw, 3.25rem);
+    font-weight:    800;
+    line-height:    1.05;
+    letter-spacing: -0.02em;
+    margin-bottom:  1rem;
   }
 
-  .work__tag {
+  .work__featured-desc {
+    font-size:     0.9375rem;
+    color:         var(--text-soft);
+    line-height:   1.75;
+    margin-bottom: 1.5rem;
+    max-width:     480px;
+  }
+
+  .work__cta-hint {
+    font-size:      0.8rem;
+    letter-spacing: 0.06em;
+    color:          var(--text-muted);
+    transition:     color 0.2s;
+  }
+
+  /* shared meta bits */
+  .work__num {
+    font-family:    var(--font-display);
+    font-size:      0.7rem;
+    font-weight:    600;
+    letter-spacing: 0.14em;
+    color:          var(--text-muted);
+  }
+
+  .work__type, .work__year {
+    font-size:  0.72rem;
+    color:      var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .work__type { border-left: 1px solid var(--border-light); padding-left: 1.25rem; }
+
+  .work__tags {
+    display:    flex;
+    gap:        0.4rem;
+    flex-wrap:  wrap;
+    list-style: none;
+    margin-bottom: 1.25rem;
+  }
+
+  .work__tags li {
     font-size:      0.65rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding:        0.3rem 0.7rem;
-    border:         1px solid var(--border);
+    padding:        0.28rem 0.65rem;
+    border:         1px solid var(--border-light);
     border-radius:  2px;
     color:          var(--text-muted);
   }
 
-  /* Arrow column */
-  .work__arrow {
-    position:   relative;
-    z-index:    1;
-    color:      var(--text-muted);
-    transition: transform 0.3s ease, color 0.2s;
-    padding-top: 0.2rem;
-    justify-self: end;
+  .work__tags--sm li { font-size: 0.6rem; }
+
+  /* ── Grid ── */
+  .work__grid {
+    display:               grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:                   1.5rem;
+    list-style:            none;
+    padding-top:           clamp(2.5rem, 5vw, 4rem);
   }
 
-  /* Mobile */
-  @media (max-width: 640px) {
-    .work__link {
+  .work__card-link {
+    display:         block;
+    border:          1px solid var(--border);
+    border-radius:   4px;
+    overflow:        hidden;
+    transition:      border-color 0.25s, transform 0.3s ease;
+    height:          100%;
+  }
+
+  .work__card-link:hover {
+    border-color: var(--border-light);
+    transform:    translateY(-4px);
+  }
+
+  .work__card-info {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .work__card-top {
+    display:         flex;
+    justify-content: space-between;
+    margin-bottom:   0.75rem;
+  }
+
+  .work__card-title {
+    font-family:    var(--font-display);
+    font-size:      1.15rem;
+    font-weight:    700;
+    letter-spacing: -0.01em;
+    margin-bottom:  0.25rem;
+  }
+
+  .work__card-type {
+    font-size:     0.72rem;
+    color:         var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .work__card-desc {
+    font-size:     0.85rem;
+    color:         var(--text-soft);
+    line-height:   1.65;
+    margin-bottom: 1rem;
+  }
+
+  /* ────────────────────────────────────────
+     CSS-art UI mockups
+  ──────────────────────────────────────── */
+  .mock {
+    background:  var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow:    hidden;
+    position:    relative;
+  }
+
+  .mock--featured {
+    border-radius: 6px 6px 0 0;
+    aspect-ratio:  16 / 10;
+    border:        1px solid var(--border);
+    border-bottom: none;
+  }
+
+  .mock--card {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* titlebar */
+  .mock__bar {
+    height:        32px;
+    background:    var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    display:       flex;
+    align-items:   center;
+    padding:       0 12px;
+    flex-shrink:   0;
+  }
+
+  .mock__dots {
+    display: flex;
+    gap:     5px;
+  }
+
+  .mock__dots span {
+    width:         7px;
+    height:        7px;
+    border-radius: 50%;
+    background:    var(--border-light);
+  }
+
+  /* Featured: sidebar + main */
+  .mock__content {
+    display:    flex;
+    height:     calc(100% - 32px);
+  }
+
+  .mock__sidebar {
+    width:         22%;
+    background:    var(--surface-2);
+    border-right:  1px solid var(--border);
+    padding:       16px 10px;
+    display:       flex;
+    flex-direction: column;
+    gap:           8px;
+  }
+
+  .mock__sidebar-item {
+    height:        8px;
+    background:    var(--border-light);
+    border-radius: 2px;
+    width:         80%;
+  }
+
+  .mock__sidebar-item.is-active {
+    background: var(--accent);
+    opacity:    0.7;
+    width:      90%;
+  }
+
+  .mock__main {
+    flex:    1;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap:     12px;
+  }
+
+  .mock__stat-row {
+    display: flex;
+    gap:     10px;
+  }
+
+  .mock__stat {
+    flex:          1;
+    height:        36px;
+    background:    var(--surface-2);
+    border:        1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .mock__chart {
+    height:        70px;
+    background:    linear-gradient(180deg, rgba(57,255,20,0.08) 0%, transparent 100%);
+    border:        1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .mock__table { display: flex; flex-direction: column; gap: 4px; }
+
+  .mock__table-row {
+    height:     10px;
+    background: var(--border);
+    border-radius: 2px;
+    opacity:    0.6;
+  }
+
+  .mock__table-row--header {
+    background: var(--border-light);
+    opacity:    1;
+  }
+
+  /* Card mockups */
+  .mock__card-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap:     10px;
+  }
+
+  .mock__card-line {
+    height:        8px;
+    background:    var(--border-light);
+    border-radius: 2px;
+    width:         90%;
+  }
+
+  .mock__card-line--wide   { width: 100%; }
+  .mock__card-line--narrow { width: 55%; }
+
+  .mock__card-block {
+    height:        40px;
+    background:    var(--surface-2);
+    border:        1px solid var(--border);
+    border-radius: 3px;
+    margin-top:    4px;
+  }
+
+  /* Unique accent per card style */
+  .mock--style-1 .mock__card-line:first-child { background: rgba(57,255,20,0.18); }
+  .mock--style-2 .mock__bar                   { background: rgba(57,255,20,0.04); }
+  .mock--style-3 .mock__card-block            { border-color: rgba(57,255,20,0.15); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .work__featured-link {
       grid-template-columns: 1fr;
-      gap:                   0.75rem;
     }
 
-    .work__meta {
-      flex-direction: row;
-      gap:            1rem;
+    .work__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .work__grid {
+      grid-template-columns: 1fr;
     }
 
-    .work__arrow  { display: none; }
-    .work__top    { flex-direction: column; gap: 0.25rem; }
+    .work__type { display: none; }
   }
 </style>

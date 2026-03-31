@@ -1,0 +1,99 @@
+---
+---
+
+<section class="statement" id="about">
+  <div class="container">
+
+    <div class="statement__identity" data-fade-up>
+      <p class="statement__word">Designer.</p>
+      <p class="statement__word">Developer.</p>
+      <p class="statement__word statement__word--dim">Craftsman.</p>
+    </div>
+
+    <div class="statement__bio" data-fade-up>
+      <p>
+        Three years building at Unique Supply have reinforced something I've
+        always believed: the best digital products are the ones where
+        engineering discipline and design sensibility are inseparable.
+      </p>
+      <p>
+        I don't choose between something that works and something that looks
+        beautiful &mdash; I build both. Passionate about the systems behind
+        the screen as much as the experience on top of it.
+      </p>
+      <a href="#contact" class="statement__link">
+        Let&rsquo;s build something &nbsp;&rarr;
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .statement {
+    padding:    var(--section-pad) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .statement > .container {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+    gap:                   clamp(3rem, 8vw, 10rem);
+    align-items:           end;
+  }
+
+  /* Identity words */
+  .statement__identity {
+    display:        flex;
+    flex-direction: column;
+  }
+
+  .statement__word {
+    font-family:    var(--font-display);
+    font-size:      clamp(3rem, 7vw, 6.5rem);
+    font-weight:    800;
+    letter-spacing: -0.025em;
+    line-height:    1.0;
+  }
+
+  .statement__word--dim {
+    color: var(--text-muted);
+  }
+
+  /* Bio */
+  .statement__bio {
+    display:        flex;
+    flex-direction: column;
+    gap:            1.25rem;
+  }
+
+  .statement__bio p {
+    font-size:   1rem;
+    color:       var(--text-soft);
+    line-height: 1.8;
+  }
+
+  .statement__link {
+    display:        inline-block;
+    margin-top:     0.5rem;
+    font-size:      0.875rem;
+    letter-spacing: 0.04em;
+    color:          var(--text-muted);
+    transition:     color 0.2s;
+    border-bottom:  1px solid var(--border);
+    padding-bottom: 0.25rem;
+    align-self:     flex-start;
+  }
+
+  .statement__link:hover {
+    color:        var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .statement > .container {
+      grid-template-columns: 1fr;
+      gap:                   3rem;
+    }
+  }
+</style>

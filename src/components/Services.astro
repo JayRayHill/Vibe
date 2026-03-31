@@ -1,0 +1,142 @@
+---
+const services = [
+  {
+    num:   '01',
+    title: 'Web Development',
+    desc:  'Building fast, performant websites and web applications from the ground up. Every line of code written with clarity, scalability, and the end user in mind.',
+    tech:  ['HTML / CSS', 'JavaScript', 'React', 'Astro', 'Node.js', 'TypeScript'],
+  },
+  {
+    num:   '02',
+    title: 'UX & Interface Design',
+    desc:  'Designing intuitive experiences that reduce friction and make complex systems feel simple. From research to high-fidelity prototype — function and form, together.',
+    tech:  ['Figma', 'User Research', 'Wireframing', 'Prototyping', 'Usability Testing'],
+  },
+  {
+    num:   '03',
+    title: 'Design Systems',
+    desc:  'Creating scalable, documented component libraries and design languages that give teams the tools to ship consistently and confidently.',
+    tech:  ['Design Tokens', 'Component Architecture', 'Documentation', 'Storybook'],
+  },
+];
+---
+
+<section class="services" id="services">
+  <div class="container">
+
+    <div class="services__header" data-fade-up>
+      <span class="section-tag">What I Do</span>
+    </div>
+
+    <ul class="services__list">
+      {services.map((s) => (
+        <li class="services__item" data-fade-up>
+          <div class="services__item-inner">
+            <span class="services__num">{s.num}</span>
+            <div class="services__body">
+              <h3 class="services__title">{s.title}</h3>
+              <p class="services__desc">{s.desc}</p>
+              <ul class="services__tech">
+                {s.tech.map(t => <li>{t}</li>)}
+              </ul>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .services {
+    padding:    var(--section-pad) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .services__header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .services__list {
+    list-style: none;
+  }
+
+  .services__item {
+    border-top: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .services__item:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .services__item-inner {
+    display:               grid;
+    grid-template-columns: 64px 1fr;
+    gap:                   clamp(1.5rem, 4vw, 4rem);
+    align-items:           start;
+    padding:               clamp(2rem, 4vw, 3.5rem) 0;
+  }
+
+  .services__num {
+    font-family:    var(--font-display);
+    font-size:      0.7rem;
+    font-weight:    600;
+    letter-spacing: 0.14em;
+    color:          var(--text-muted);
+    padding-top:    0.3rem;
+  }
+
+  .services__body {
+    display:        flex;
+    flex-direction: column;
+    gap:            1rem;
+  }
+
+  .services__title {
+    font-family:    var(--font-display);
+    font-size:      clamp(1.4rem, 2.8vw, 2.2rem);
+    font-weight:    700;
+    letter-spacing: -0.015em;
+    line-height:    1.1;
+  }
+
+  .services__desc {
+    font-size:   0.9375rem;
+    color:       var(--text-soft);
+    line-height: 1.75;
+    max-width:   580px;
+  }
+
+  .services__tech {
+    display:    flex;
+    gap:        0.45rem;
+    flex-wrap:  wrap;
+    list-style: none;
+    margin-top: 0.25rem;
+  }
+
+  .services__tech li {
+    font-size:      0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding:        0.3rem 0.7rem;
+    border:         1px solid var(--border-light);
+    border-radius:  2px;
+    color:          var(--text-muted);
+    transition:     border-color 0.2s, color 0.2s;
+  }
+
+  .services__item:hover .services__tech li {
+    border-color: rgba(57, 255, 20, 0.2);
+    color:        var(--text-soft);
+  }
+
+  @media (max-width: 600px) {
+    .services__item-inner {
+      grid-template-columns: 1fr;
+      gap:                   0.75rem;
+    }
+  }
+</style>
