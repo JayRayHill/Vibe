@@ -156,6 +156,9 @@ import Contact   from '../components/Contact.astro';
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Shared constant — used by services pin and horizontal scroll
+  const NAV_H = 64;
+
   // ─────────────────────────────────────────────────────────────
   // PAGE INTRO — white screen → name flashes → slides up
   // ─────────────────────────────────────────────────────────────
@@ -269,7 +272,6 @@ import Contact   from '../components/Contact.astro';
   // then normal scroll resumes.
   // ─────────────────────────────────────────────────────────────
   const serviceItems = gsap.utils.toArray<HTMLElement>('.services__item');
-  const NAV_H        = 64;
   const PX_PER_ITEM  = 320; // scroll distance allocated per item
 
   // Show first item, hide the rest
