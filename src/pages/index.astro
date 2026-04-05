@@ -241,7 +241,7 @@ import Contact   from '../components/Contact.astro';
   // Exclude everything inside #services — the pin handles that section's
   // own reveal, and scramble's ScrollTrigger breaks inside a pinned element
   const scrambleTargets = document.querySelectorAll<HTMLElement>(
-    'h2:not(#services *), h3:not(#services *), h4:not(#services *), h5:not(#services *), [data-scramble]:not(#services *)'
+    'h2, h3, h4, h5, [data-scramble]'
   );
 
   scrambleTargets.forEach((el) => {
@@ -263,39 +263,23 @@ import Contact   from '../components/Contact.astro';
   });
 
   // ─────────────────────────────────────────────────────────────
-  // SERVICES — pinned sticky scroll
-  // Each service item animates in sequentially as you scroll.
-  // The section stays pinned until all three have appeared,
-  // then normal scroll resumes.
+  // SERVICES — staggered scroll reveal
+  // Each item fades + slides up as it enters the viewport and
+  // stays visible — they stack up as you scroll down.
   // ─────────────────────────────────────────────────────────────
-  const serviceItems = gsap.utils.toArray<HTMLElement>('.services__item');
-  const NAV_H        = 64;
-  const PX_PER_ITEM  = 320; // scroll distance allocated per item
-
-  // Show first item, hide the rest
-  gsap.set(serviceItems[0], { opacity: 1 });
-  gsap.set(serviceItems.slice(1), { opacity: 0 });
-
-  // Scrubbed timeline: each item crossfades into the next as you scroll.
-  // scrub ties the animation directly to scroll position so the pace
-  // feels completely in the user's control.
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger:       '#services',
-      start:         `top top+=${NAV_H}`,
-      end:           `+=${serviceItems.length * PX_PER_ITEM}`,
-      pin:           true,
-      anticipatePin: 1,
-      scrub:         0.8,
-    },
-  });
-
-  serviceItems.forEach((item, i) => {
-    if (i < serviceItems.length - 1) {
-      // Fade out current, fade in next — simultaneous crossfade
-      tl.to(item,              { opacity: 0, duration: 0.5, ease: 'power1.inOut' }, i + 0.3);
-      tl.to(serviceItems[i + 1], { opacity: 1, duration: 0.5, ease: 'power1.inOut' }, i + 0.3);
-    }
+  gsap.utils.toArray<HTMLElement>('.services__item').forEach((item, i) => {
+    gsap.to(item, {
+      scrollTrigger: {
+        trigger:       item,
+        start:         'top 82%',
+        toggleActions: 'play none none none',
+      },
+      opacity:  1,
+      y:        0,
+      duration: 0.75,
+      delay:    i * 0.08,
+      ease:     'power3.out',
+    });
   });
 
   // ─────────────────────────────────────────────────────────────
