@@ -58,16 +58,18 @@ const services = [
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  /* Stack all items in the same grid cell so only one shows at a time */
   .services__list {
-    list-style:    none;
-    display:       grid;
-    border-top:    1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    list-style: none;
   }
 
   .services__item {
-    grid-area: 1 / 1; /* all items occupy the same cell */
+    border-top: 1px solid var(--border);
+    opacity:    0;
+    transform:  translateY(28px);
+  }
+
+  .services__item:last-child {
+    border-bottom: 1px solid var(--border);
   }
 
   .services__item-inner {
