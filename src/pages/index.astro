@@ -176,9 +176,10 @@ import Contact   from '../components/Contact.astro';
 
   // ─────────────────────────────────────────────────────────────
   // TEXT SCRAMBLE ENGINE
-  // Katakana + symbols = "alien language" feel
+  // Latin + numbers + symbols — chosen for width parity with the
+  // final text so scramble-in-progress doesn't wrap to new lines.
   // ─────────────────────────────────────────────────────────────
-  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンヴ#@$%&!?><|/~^*';
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&!?/~^*+=-:;';
 
   class TextScramble {
     private el:      HTMLElement;
