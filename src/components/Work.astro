@@ -284,6 +284,7 @@ const cards = [
     height:      100%;
     width:       max-content;
     align-items: stretch;
+    will-change: transform;
   }
 
   /* ── Individual card ── */
@@ -627,7 +628,31 @@ const cards = [
     .work__type          { display: none; }
   }
 
-  @media (max-width: 600px) {
-    .work__hscroll { height: 72vw; }
+  /* Mobile: GSAP pin is disabled — use native horizontal swipe + scroll-snap */
+  @media (max-width: 768px) {
+    .work__hscroll {
+      height:             auto;
+      overflow-x:         auto;
+      overflow-y:         hidden;
+      scroll-snap-type:   x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width:    none;
+    }
+    .work__hscroll::-webkit-scrollbar { display: none; }
+
+    .work__track {
+      padding:     1.5rem var(--gutter);
+      width:       max-content;
+      will-change: auto;
+    }
+
+    .work__card {
+      width:             min(78vw, 320px);
+      height:            auto;
+      scroll-snap-align: start;
+      transform:         none !important;
+    }
+
+    .work__card-visual { height: 200px; }
   }
 </style>
