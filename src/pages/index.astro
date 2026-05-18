@@ -192,11 +192,15 @@ import Contact   from '../components/Contact.astro';
 
     run(text: string): Promise<void> {
       const promise = new Promise<void>((res) => (this.resolve = res));
+
+      // Freeze the element's box so scramble chars can never cause a reflow
+      this.el.style.width     = this.el.offsetWidth  + 'px';
+      this.el.style.minHeight = this.el.offsetHeight + 'px';
+      this.el.style.overflow  = 'hidden';
+
       this.queue = Array.from(text, (char, i) => ({
         to:    char,
-        // i * 4 staggers each character — left-to-right decode feel
         start: Math.floor(i * 4),
-        // Each char scrambles for 28-44 frames before locking in (~0.5-0.7s per char)
         end:   Math.floor(i * 4) + 28 + Math.floor(Math.random() * 16),
         char:  '',
       }));
@@ -231,8 +235,11 @@ import Contact   from '../components/Contact.astro';
         this.frame++;
         this.raf = requestAnimationFrame(() => this.tick());
       } else {
-        // Restore clean text — no innerHTML artifacts left behind
+        // Restore clean text and release the frozen dimensions
         this.el.textContent = text;
+        this.el.style.width     = '';
+        this.el.style.minHeight = '';
+        this.el.style.overflow  = '';
         this.resolve();
       }
     }
