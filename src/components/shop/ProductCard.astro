@@ -1,0 +1,29 @@
+---
+import ProductImage from './ProductImage.astro';
+import { money }  from '../../data/products.js';
+
+const { product: p } = Astro.props;
+---
+<article class="k-card" data-category={p.category}>
+  <a href={`/shop/${p.handle}`} class="k-card__art" aria-label={`View ${p.name} — ${p.subtitle}`}>
+    {p.badge && <span class="k-card__badge">{p.badge}</span>}
+    <ProductImage handle={p.handle} hue={p.hue} alt={p.imageAlt} image={p.image} />
+  </a>
+
+  <div class="k-card__body">
+    <span class="k-card__cat">{p.category}</span>
+    <h3 class="k-card__name">
+      {p.name}
+      <span>{p.subtitle}</span>
+    </h3>
+    <p class="k-card__blurb">{p.blurb}</p>
+
+    <div class="k-card__foot">
+      <span class="k-price">
+        {money(p.price)}
+        {p.compareAt && <s>{money(p.compareAt)}</s>}
+      </span>
+      <a href={`/shop/${p.handle}`} class="k-card__link">View →</a>
+    </div>
+  </div>
+</article>

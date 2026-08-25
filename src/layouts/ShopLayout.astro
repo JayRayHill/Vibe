@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import '../styles/shop.css';
+import brand from '../data/brand.js';
+
+interface Props {
+  title?:       string;
+  description?: string;
+  jsonLd?:      object | null;
+}
+
+const {
+  title       = `${brand.name} — ${brand.tagline}`,
+  description = brand.description,
+  jsonLd      = null,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0b" />
+    <title>{title}</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type"        content="website" />
+    <meta property="og:site_name"   content={brand.name} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card"       content="summary_large_image" />
+    <meta name="twitter:title"      content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap"
+      rel="stylesheet"
+    />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <div class="shop">
+      <slot />
+    </div>
+  </body>
+</html>

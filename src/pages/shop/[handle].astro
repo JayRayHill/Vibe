@@ -1,0 +1,160 @@
+---
+import ShopLayout  from '../../layouts/ShopLayout.astro';
+import ShopNav     from '../../components/shop/ShopNav.astro';
+import ShopFooter  from '../../components/shop/ShopFooter.astro';
+import ProductImage from '../../components/shop/ProductImage.astro';
+import ProductCard from '../../components/shop/ProductCard.astro';
+import brand       from '../../data/brand.js';
+import { products, money } from '../../data/products.js';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { handle: p.handle }, props: { product: p } }));
+}
+
+const { product: p } = Astro.props;
+
+// NOTE: `p.sourcing` holds unit cost, MOQ and margin. It is deliberately
+// never rendered — it is internal buying data, not storefront copy.
+const related = products.filter((r) => r.handle !== p.handle).slice(0, 3);
+const saved   = p.compareAt ? p.compareAt - p.price : 0;
+
+const jsonLd = {
+  '@context':   'https://schema.org',
+  '@type':      'Product',
+  name:         `${brand.nameCased} ${p.name}`,
+  alternateName: p.subtitle,
+  description:  p.seo.description,
+  category:     p.category,
+  brand:        { '@type': 'Brand', name: brand.nameCased },
+  offers: {
+    '@type':         'Offer',
+    priceCurrency:   'USD',
+    price:           p.price,
+    availability:    'https://schema.org/InStock',
+    warranty:        '2 years',
+  },
+};
+---
+
+<ShopLayout title={p.seo.title} description={p.seo.description} jsonLd={jsonLd}>
+  <ShopNav />
+
+  <main>
+    <section class="shop-section" style="padding-top:clamp(2.5rem,5vw,4rem)">
+      <div class="shop-container">
+        <p class="k-pdp__note" style="margin-bottom:2rem">
+          <a href="/shop" style="color:var(--k-muted)">Shop</a>
+          <span style="color:var(--k-dim)"> / </span>
+          <span>{p.name}</span>
+        </p>
+
+        <div class="k-pdp">
+          <!-- ─── Art ─── -->
+          <div class="k-pdp__art">
+            <ProductImage handle={p.handle} hue={p.hue} alt={p.imageAlt} image={p.image} eager />
+          </div>
+
+          <!-- ─── Detail ─── -->
+          <div>
+            <span class="shop-eyebrow">{p.category}</span>
+            <h1 class="k-pdp__title">{p.name}</h1>
+            <p class="k-pdp__sub">{p.subtitle}</p>
+
+            <div class="k-pdp__price">
+              <span class="k-price">
+                {money(p.price)}
+                {p.compareAt && <s>{money(p.compareAt)}</s>}
+              </span>
+              {saved > 0 && <span class="k-pdp__save">Save {money(saved)}</span>}
+            </div>
+
+            <div class="k-pdp__desc">
+              {p.description.map((para) => <p>{para}</p>)}
+            </div>
+
+            <div class="k-pdp__buy">
+              <button type="button" class="k-btn k-btn--solid" data-add={p.handle}>
+                Add to cart — {money(p.price)}
+              </button>
+              <a href="/shop#range" class="k-btn k-btn--ghost">Back to range</a>
+            </div>
+            <p class="k-pdp__note" data-add-msg role="status">
+              Free US shipping · 30-night trial · 2-year warranty
+            </p>
+
+            <!-- ─── Features ─── -->
+            <div class="k-block">
+              <h3>Why it is built this way</h3>
+              {p.features.map((f) => (
+                <div class="k-feature">
+                  <span class="k-feature__mark" aria-hidden="true">◆</span>
+                  <div>
+                    <div class="k-feature__t">{f.title}</div>
+                    <p class="k-feature__b">{f.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- ─── Specs ─── -->
+            <div class="k-block">
+              <h3>Specifications</h3>
+              <table class="k-specs">
+                <tbody>
+                  {Object.entries(p.specs).map(([k, v]) => (
+                    <tr><th scope="row">{k}</th><td>{v}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ─── In the box ─── -->
+            <div class="k-block">
+              <h3>In the box</h3>
+              <ul class="k-inbox">
+                {p.inBox.map((i) => <li>{i}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Related ─── -->
+    <section class="shop-section k-story">
+      <div class="shop-container">
+        <div class="k-head">
+          <div>
+            <span class="shop-eyebrow">Also consider</span>
+            <h2>Pairs well with</h2>
+          </div>
+          <a href="/shop#range" class="k-btn k-btn--ghost">See all eight</a>
+        </div>
+        <div class="k-grid">
+          {related.map((r) => <ProductCard product={r} />)}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <ShopFooter />
+</ShopLayout>
+
+<script>
+  // Cart is a front-end stub. Wire to Shopify Buy SDK, Snipcart or Stripe
+  // before launch — this only proves the interaction and updates the badge.
+  const btn   = document.querySelector<HTMLButtonElement>('[data-add]');
+  const msg   = document.querySelector<HTMLElement>('[data-add-msg]');
+  const count = document.querySelector<HTMLElement>('[data-cart-count]');
+
+  btn?.addEventListener('click', () => {
+    const next = Number(count?.textContent ?? '0') + 1;
+    if (count) count.textContent = String(next);
+    if (msg) {
+      msg.textContent = 'Added to cart. Checkout is not connected yet.';
+      setTimeout(() => {
+        msg.textContent = 'Free US shipping · 30-night trial · 2-year warranty';
+      }, 2600);
+    }
+  });
+</script>

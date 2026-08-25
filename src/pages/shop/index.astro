@@ -1,0 +1,188 @@
+---
+import ShopLayout  from '../../layouts/ShopLayout.astro';
+import ShopNav     from '../../components/shop/ShopNav.astro';
+import ShopFooter  from '../../components/shop/ShopFooter.astro';
+import ProductCard from '../../components/shop/ProductCard.astro';
+import brand       from '../../data/brand.js';
+import { products, categories } from '../../data/products.js';
+
+const jsonLd = {
+  '@context':   'https://schema.org',
+  '@type':      'Store',
+  name:         brand.nameCased,
+  description:  brand.description,
+  slogan:       brand.tagline,
+  email:        brand.email,
+  makesOffer:   products.map((p) => ({
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    price: p.price,
+    itemOffered: { '@type': 'Product', name: `${brand.nameCased} ${p.name}`, category: p.category },
+  })),
+};
+
+const approach = [
+  {
+    n: '01',
+    h: 'We publish the numbers',
+    p: 'Irradiance, amplitude, decibels, pressure range. The specs that decide whether a device works are the ones most brands leave off the page — so we lead with them.',
+  },
+  {
+    n: '02',
+    h: 'Four protocols, not forty products',
+    p: 'Percussion, light, compression, and temperature. Those are the modalities with evidence behind them. We would rather build eight things properly than eighty badly.',
+  },
+  {
+    n: '03',
+    h: 'Priced at the home, not the clinic',
+    p: 'The same hardware sold under a physiotherapy label carries a three-times markup. We sell direct and skip that entirely.',
+  },
+];
+---
+
+<ShopLayout
+  title={`${brand.name} — ${brand.tagline}`}
+  description={brand.description}
+  jsonLd={jsonLd}
+>
+  <ShopNav />
+
+  <main>
+    <!-- ─── Hero ─── -->
+    <section class="k-hero">
+      <div class="shop-container">
+        <span class="shop-eyebrow">{brand.strapline}</span>
+        <h1 class="k-hero__title">Recovery, <em>engineered.</em></h1>
+        <p class="shop-lede">
+          Eight devices covering the four recovery protocols that hold up under scrutiny —
+          percussion, red light, compression and temperature. Specifications published in full.
+          Clinic-grade hardware, without the clinic markup.
+        </p>
+        <div class="k-hero__cta">
+          <a href="#range"    class="k-btn k-btn--solid">Shop the range</a>
+          <a href="#approach" class="k-btn k-btn--ghost">Why these eight</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Trust ─── -->
+    <div class="k-trust">
+      {brand.guarantees.map((g) => (
+        <div class="k-trust__item">
+          <div class="k-trust__label">{g.label}</div>
+          <p class="k-trust__detail">{g.detail}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- ─── Range ─── -->
+    <section class="shop-section" id="range">
+      <div class="shop-container">
+        <div class="k-head">
+          <div>
+            <span class="shop-eyebrow">The range</span>
+            <h2>Eight devices.<br />Four protocols.</h2>
+          </div>
+
+          <div class="k-filters" role="group" aria-label="Filter products by category">
+            <button class="k-filter" type="button" data-filter="all" aria-pressed="true">All</button>
+            {categories.map((c) => (
+              <button class="k-filter" type="button" data-filter={c} aria-pressed="false">{c}</button>
+            ))}
+          </div>
+        </div>
+
+        <div class="k-grid" data-grid>
+          {products.map((p) => <ProductCard product={p} />)}
+        </div>
+
+        <p class="k-pdp__note" data-empty hidden style="margin-top:2rem">
+          Nothing in that category yet.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── Approach ─── -->
+    <section class="shop-section k-story" id="approach">
+      <div class="shop-container">
+        <div class="k-head">
+          <div>
+            <span class="shop-eyebrow">Approach</span>
+            <h2>Fewer things, better specified.</h2>
+          </div>
+        </div>
+
+        <div class="k-story__grid">
+          {approach.map((a) => (
+            <div>
+              <div class="k-story__n">{a.n}</div>
+              <h3 class="k-story__h">{a.h}</h3>
+              <p class="k-story__p">{a.p}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Signup ─── -->
+    <section class="shop-section" style="padding-top:0">
+      <div class="shop-container">
+        <div class="k-signup">
+          <h2>Get the recovery protocol guide</h2>
+          <p class="shop-lede" style="margin-inline:auto">
+            A short, plainly written guide to what each modality does, how often to use it,
+            and the order to run them in. No charge, no upsell.
+          </p>
+          <form class="k-signup__form" data-signup>
+            <label for="k-email" class="visually-hidden">Email address</label>
+            <input id="k-email" type="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+            <button type="submit" class="k-btn k-btn--solid">Send it</button>
+          </form>
+          <p class="k-pdp__note" data-signup-msg role="status" style="margin-top:1rem">&nbsp;</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <ShopFooter />
+</ShopLayout>
+
+<script>
+  // ─── Category filter ───
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const grid    = document.querySelector<HTMLElement>('[data-grid]');
+  const empty   = document.querySelector<HTMLElement>('[data-empty]');
+
+  if (grid) {
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.k-card'));
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const want = btn.dataset.filter;
+
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+
+        let shown = 0;
+        cards.forEach((card) => {
+          const match = want === 'all' || card.dataset.category === want;
+          card.hidden = !match;
+          if (match) shown++;
+        });
+
+        if (empty) empty.hidden = shown > 0;
+      });
+    });
+  }
+
+  // ─── Newsletter (front-end only — wire to a real provider before launch) ───
+  const form = document.querySelector<HTMLFormElement>('[data-signup]');
+  const msg  = document.querySelector<HTMLElement>('[data-signup-msg]');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = form.querySelector<HTMLInputElement>('input[type="email"]');
+    if (!input?.value) return;
+    if (msg) msg.textContent = `Thanks — the guide is on its way to ${input.value}.`;
+    form.reset();
+  });
+</script>

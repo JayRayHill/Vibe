@@ -1,0 +1,19 @@
+---
+import brand from '../../data/brand.js';
+---
+<header class="k-nav">
+  <div class="shop-container k-nav__inner">
+    <a href="/shop" class="k-nav__brand" aria-label={`${brand.name} home`}>{brand.name}</a>
+
+    <nav class="k-nav__links" aria-label="Store navigation">
+      <a href="/shop#range">Shop</a>
+      <a href="/shop#approach">Approach</a>
+      <a href="/shop#support">Support</a>
+      <a href="/">Portfolio</a>
+    </nav>
+
+    <a href="/shop#range" class="k-nav__cart">
+      Cart <span class="k-nav__count" data-cart-count>0</span>
+    </a>
+  </div>
+</header>

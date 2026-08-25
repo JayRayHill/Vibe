@@ -1,0 +1,45 @@
+---
+import brand from '../../data/brand.js';
+import { categories } from '../../data/products.js';
+---
+<footer class="k-foot" id="support">
+  <div class="shop-container">
+    <div class="k-foot__top">
+      <div>
+        <div class="k-foot__brand">{brand.name}</div>
+        <p class="k-foot__tag">{brand.promise}</p>
+      </div>
+
+      <div class="k-foot__cols">
+        <div class="k-foot__col">
+          <h4>Shop</h4>
+          <ul>
+            {categories.map((c) => <li><a href={`/shop#range`}>{c}</a></li>)}
+          </ul>
+        </div>
+        <div class="k-foot__col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#support">Shipping &amp; returns</a></li>
+            <li><a href="#support">30-night trial</a></li>
+            <li><a href="#support">Warranty</a></li>
+            <li><a href={`mailto:${brand.email}`}>Contact</a></li>
+          </ul>
+        </div>
+        <div class="k-foot__col">
+          <h4>Follow</h4>
+          <ul>
+            <li><a href={brand.social.instagram} rel="noopener noreferrer" target="_blank">Instagram</a></li>
+            <li><a href={brand.social.youtube}   rel="noopener noreferrer" target="_blank">YouTube</a></li>
+            <li><a href={brand.social.tiktok}    rel="noopener noreferrer" target="_blank">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="k-foot__base">
+      <span>&copy; {new Date().getFullYear()} {brand.nameCased}. All rights reserved.</span>
+      <span>{brand.strapline}</span>
+    </div>
+  </div>
+</footer>

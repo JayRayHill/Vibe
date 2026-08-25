@@ -5,3 +5,6 @@ node_modules/
 !.env.example
 .DS_Store
 .astro/
+
+# Raw supplier images — processed output is committed, sources are not
+public/products/raw/
