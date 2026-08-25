@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "images": "node scripts/prep-images.mjs"
+    "images": "node scripts/prep-images.mjs",
+    "preview:bundle": "node scripts/build-preview.mjs"
   },
   "dependencies": {
     "astro": "^4.16.0",
