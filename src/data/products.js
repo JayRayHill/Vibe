@@ -25,6 +25,11 @@ export const products = [
     // vector rendering. Leave null to keep the drawing.
     image:    null,
 
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
+
     price:     149,
     compareAt: 199,
 
@@ -81,6 +86,11 @@ export const products = [
     // Drop a photo in public/products/ and point at it here to replace the
     // vector rendering. Leave null to keep the drawing.
     image:    null,
+
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
 
     price:     399,
     compareAt: 549,
@@ -139,6 +149,11 @@ export const products = [
     // vector rendering. Leave null to keep the drawing.
     image:    null,
 
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
+
     price:     89,
     compareAt: 129,
 
@@ -194,6 +209,11 @@ export const products = [
     // Drop a photo in public/products/ and point at it here to replace the
     // vector rendering. Leave null to keep the drawing.
     image:    null,
+
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
 
     price:     449,
     compareAt: 599,
@@ -252,6 +272,11 @@ export const products = [
     // vector rendering. Leave null to keep the drawing.
     image:    null,
 
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
+
     price:     299,
     compareAt: 399,
 
@@ -308,6 +333,11 @@ export const products = [
     // Drop a photo in public/products/ and point at it here to replace the
     // vector rendering. Leave null to keep the drawing.
     image:    null,
+
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
 
     price:     229,
     compareAt: 329,
@@ -366,6 +396,11 @@ export const products = [
     // vector rendering. Leave null to keep the drawing.
     image:    null,
 
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
+
     price:     59,
     compareAt: 79,
 
@@ -421,6 +456,11 @@ export const products = [
     // Drop a photo in public/products/ and point at it here to replace the
     // vector rendering. Leave null to keep the drawing.
     image:    null,
+
+    // Stripe Payment Link for this product. Create it at
+    // dashboard.stripe.com/payment-links, paste the URL here, and the
+    // buy button becomes a real checkout. Null keeps the disabled stub.
+    checkoutUrl: null,
 
     price:     99,
     compareAt: 139,

@@ -73,9 +73,19 @@ const jsonLd = {
             </div>
 
             <div class="k-pdp__buy">
-              <button type="button" class="k-btn k-btn--solid" data-add={p.handle}>
-                Add to cart — {money(p.price)}
-              </button>
+              {p.checkoutUrl ? (
+                <a
+                  href={p.checkoutUrl}
+                  class="k-btn k-btn--solid"
+                  rel="noopener"
+                >
+                  Buy now — {money(p.price)}
+                </a>
+              ) : (
+                <button type="button" class="k-btn k-btn--solid" data-add={p.handle}>
+                  Add to cart — {money(p.price)}
+                </button>
+              )}
               <a href="/shop#range" class="k-btn k-btn--ghost">Back to range</a>
             </div>
             <p class="k-pdp__note" data-add-msg role="status">
